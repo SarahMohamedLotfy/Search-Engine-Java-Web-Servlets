@@ -10,6 +10,9 @@ import org.jsoup.select.Elements;
 
 public class WebCrawler {
 	
+	public static int count = 0;
+	public static final int MAX_NUM = 5000;
+	
 	private HashSet<String> links;
 
     public WebCrawler() {
@@ -33,7 +36,13 @@ public class WebCrawler {
 
                 //5. For each extracted URL... go back to Step 4.
                 for (Element page : linksOnPage) {
-                    getPageLinks(page.attr("abs:href"));
+//                	if (count < MAX_NUM) {
+            		if (links.size() < MAX_NUM) {
+                		count++;
+                		getPageLinks(page.attr("abs:href"));
+                	}
+                	else
+                		break;
                 }
             } catch (IOException e) {
                 System.err.println("For '" + URL + "': " + e.getMessage());
