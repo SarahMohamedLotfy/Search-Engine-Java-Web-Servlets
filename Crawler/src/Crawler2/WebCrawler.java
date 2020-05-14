@@ -12,17 +12,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class WebCrawler {
+import WebCrawler.CrawlerThread;
+
+public class WebCrawler implements Runnable {
 	
 	public static int count = 0;
 	public static final int MAX_NUM = 5000;
 	public static final boolean DEBUG = false;
 	public static final String DISALLOW = "Disallow:";
+	public String urlLink;
 	
 	private HashSet<String> links;
 
-    public WebCrawler() {
+    public WebCrawler(String urlLink) {
         links = new HashSet<String>();
+        this.urlLink = urlLink;
     }
 
     public void getPageLinks(String URL) {
@@ -136,7 +140,16 @@ public class WebCrawler {
 
     public static void main(String[] args) {
         //1. Pick a URL from the frontier
-        new WebCrawler().getPageLinks("https://en.wikipedia.org/");
+//        new WebCrawler().getPageLinks("https://en.wikipedia.org/");
+        Thread crawlerThread2 = new Thread(new WebCrawler("https://en.wikipedia.org/"));
+		
+		crawlerThread2.start();
     }
+
+	@Override
+	public void run() {
+		getPageLinks(urlLink);
+		
+	}
 
 }
