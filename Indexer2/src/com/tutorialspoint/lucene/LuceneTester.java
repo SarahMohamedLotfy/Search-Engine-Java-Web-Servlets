@@ -92,7 +92,6 @@ public class LuceneTester {
                         text = text + st;
 
                     documentsBody.add(text);
-                    documentsBody.add("   ");//to split "   "
 
                     String[] arr = text.split(" ");
 
