@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -38,6 +39,7 @@ public class Indexer {
 
         //index file contents
         Field contentField = new Field(LuceneConstants.CONTENTS, new FileReader(file));
+
         //index file name
         Field fileNameField = new Field(LuceneConstants.FILE_NAME,
                 file.getName(),Field.Store.YES,Field.Index.NOT_ANALYZED);

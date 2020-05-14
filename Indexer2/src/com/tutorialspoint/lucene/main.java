@@ -16,27 +16,36 @@ public class main {
 
 
         //Extractor ///
-       // Extractor extract= new Extractor();
-        //extract.extract_from_html();
+         DataFromIndexer data = new DataFromIndexer ();
+         Extractor extract= new Extractor();
+         extract.extract_from_html();
 
         // Get words in html document
-        String document = "rehab.html" ;
+        String document = "NameGenderForm.html" ;
         GetWords getWords = new GetWords(document);
         getWords.get();
 
         //Indexer
         LuceneTester tester;
         try {
-            String search_sentence ="rehab sarah akbar";
+            String search_sentence ="sarah rehab important ";
             tester = new LuceneTester();
             tester.createIndex();
-            tester.search(search_sentence);
+            tester.search(search_sentence,  data);
+
         }
         catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println("**********************");
+        System.out.println(data.documentsName);
+        System.out.println(data.documentsBody);
+        System.out.println(data.occurencesOfWordsCount);
+        System.out.println(data.occurencesOfWordsInTitle);
+        System.out.println(data.occurencesOfWordsInHeader);
+        System.out.println(data.occurencesOfWordsInPlainText);
 
     }
 }
