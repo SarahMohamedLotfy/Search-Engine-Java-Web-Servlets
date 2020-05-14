@@ -12,8 +12,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import WebCrawler.CrawlerThread;
-
 public class WebCrawler implements Runnable {
 	
 	public static int count = 0;
