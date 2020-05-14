@@ -87,19 +87,19 @@ public class Extractor {
                 System.out.println("body:  "+string);
                 System.out.println("******************************************");
 
-
-                // Write in files
-                try {
-                    String filename = "filename"+Integer.toString(i)+".txt";
-                    FileWriter myWriter = new FileWriter(filename);
-                    myWriter.write(title + " , " + header +" , " + string);
-                    myWriter.close();
-                    System.out.println("Successfully wrote to the file.");
-                } catch (IOException e) {
-                    System.out.println("An error occurred.");
-                    e.printStackTrace();
+                if ( !title.isEmpty() || !header.isEmpty() ||!string.isEmpty()  ) {
+                    // Write in files
+                    try {
+                        String filename = "filename" + Integer.toString(i) + ".txt";
+                        FileWriter myWriter = new FileWriter(filename);
+                        myWriter.write(title + " , " + header + " , " + string);
+                        myWriter.close();
+                        System.out.println("Successfully wrote to the file.");
+                    } catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
                 }
-
             }
             i++;
         }
