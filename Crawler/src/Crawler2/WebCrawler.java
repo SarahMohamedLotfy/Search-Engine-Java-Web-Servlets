@@ -1,7 +1,11 @@
 package Crawler2;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashSet;
+import java.util.StringTokenizer;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +16,8 @@ public class WebCrawler {
 	
 	public static int count = 0;
 	public static final int MAX_NUM = 5000;
+	public static final boolean DEBUG = false;
+	public static final String DISALLOW = "Disallow:";
 	
 	private HashSet<String> links;
 
@@ -36,10 +42,11 @@ public class WebCrawler {
 
                 //5. For each extracted URL... go back to Step 4.
                 for (Element page : linksOnPage) {
-//                	if (count < MAX_NUM) {
-            		if (links.size() < MAX_NUM) {
+                	String url = null;
+                	if (count < MAX_NUM && robotSafe(url = page.attr("abs:href"))) {
+//            		if (links.size() < MAX_NUM) {
                 		count++;
-                		getPageLinks(page.attr("abs:href"));
+                		getPageLinks(url);
                 	}
                 	else
                 		break;
@@ -48,6 +55,83 @@ public class WebCrawler {
                 System.err.println("For '" + URL + "': " + e.getMessage());
             }
         }
+    }
+    
+    //Check that the robot exclusion protocol does not disallow downloading url.
+    public boolean robotSafe(String url_str) {
+    	URL url = null;
+    	try {
+			url = new URL(url_str);
+		} catch (MalformedURLException e) {
+			// something weird is happening, so don't trust it
+		    return false;
+		}
+    	String strHost = url.getHost();
+    	
+    	// form URL of the robots.txt file
+    	String strRobot = "http://" + strHost + "/robots.txt";
+    	URL urlRobot = null;
+    	try {
+			urlRobot = new URL(strRobot);
+		} catch (MalformedURLException e) {
+			// something weird is happening, so don't trust it
+		    return false;
+		}
+    	
+    	if (DEBUG) System.out.println("Checking robot protocol " + 
+                urlRobot.toString());
+    	
+    	String strCommands;
+    	
+    	InputStream urlRobotStream = null;
+    	
+    	try {
+			urlRobotStream = urlRobot.openStream();
+			
+			// read in entire file
+			byte b[] = new byte[1000];
+			
+			int numRead = urlRobotStream.read(b);
+			strCommands = new String(b, 0, numRead);
+			
+			while (numRead != -1) {
+				numRead = urlRobotStream.read(b);
+				
+				if (numRead != -1) {
+					String newCommand = new String(b, 0, numRead);
+					strCommands += newCommand;
+				}
+			}
+			
+			urlRobotStream.close();
+			
+		} catch (IOException e) {
+			// if there is no robots.txt file, it is OK to search
+		    return true;
+		}
+    	
+    	if (DEBUG) System.out.println(strCommands);
+    	
+    	// assume that this robots.txt refers to us and search for "Disallow:" commands.
+    	String strURL = url.getFile();
+    	int index = 0;
+    	
+    	while ((index = strCommands.indexOf(DISALLOW, index)) != -1){
+    		index += DISALLOW.length();
+    		String strPath = strCommands.substring(index);
+    		StringTokenizer st = new StringTokenizer(strPath);
+    		
+    		if (!st.hasMoreTokens())
+    			break;
+    		
+    		String strBadPath = st.nextToken();
+    		
+    		// if the URL starts with a disallowed path, it is not safe
+    		if (strURL.indexOf(strBadPath) == 0)
+    			return false;
+    	}
+    	
+    	return true;
     }
 
     public static void main(String[] args) {
