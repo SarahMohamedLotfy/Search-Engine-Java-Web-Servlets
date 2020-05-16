@@ -1,7 +1,11 @@
 package Crawler2;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
@@ -11,8 +15,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import WebCrawler.example1;
 
 public class WebCrawler implements Runnable {
 	
@@ -38,6 +40,7 @@ public class WebCrawler implements Runnable {
                 if (links.add(URL)) {
                     System.out.println(URL);
             		count++;
+            		saveHTML(URL);
                 }
 
                 //2. Fetch the HTML code
@@ -138,6 +141,39 @@ public class WebCrawler implements Runnable {
     	
     	return true;
     }
+    
+    // to save html
+    public static void saveHTML(String webpage) {
+    	try { 
+    		  
+            // Create URL object 
+            URL url = new URL(webpage); 
+            BufferedReader readr =  
+              new BufferedReader(new InputStreamReader(url.openStream())); 
+  
+            // Enter filename in which you want to download 
+            BufferedWriter writer =  
+              new BufferedWriter(new FileWriter("html/" + webpage + ".html")); 
+              
+            // read each line from stream till end 
+            String line; 
+            while ((line = readr.readLine()) != null) { 
+                writer.write(line); 
+            } 
+  
+            readr.close(); 
+            writer.close(); 
+            System.out.println("Successfully Downloaded."); 
+        } 
+  
+        // Exceptions 
+        catch (MalformedURLException mue) { 
+            System.out.println("Malformed URL Exception raised"); 
+        } 
+        catch (IOException ie) { 
+            System.out.println("IOException raised"); 
+        } 
+    } 
 
     public static void main(String[] args) {
         //1. Pick a URL from the frontier
