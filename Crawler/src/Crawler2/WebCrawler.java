@@ -38,7 +38,7 @@ public class WebCrawler implements Runnable {
                 }
 
                 //2. Fetch the HTML code
-                Document document = Jsoup.connect(URL).get();
+                Document document = Jsoup.connect(URL).ignoreContentType(true).get();
                 //3. Parse the HTML to extract links to other URLs
                 Elements linksOnPage = document.select("a[href]");
 
