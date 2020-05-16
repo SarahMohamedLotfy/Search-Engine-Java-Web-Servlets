@@ -93,10 +93,11 @@ public class WebCrawler implements Runnable {
 			// read in entire file
 			byte b[] = new byte[1000];
 			
-			int numRead = urlRobotStream.read(b);
+			int numRead = 0;
 			strCommands = new String(b, 0, numRead);
 			
-			while (numRead != -1) {
+			while ((numRead=urlRobotStream.read(b)) != -1) {
+				strCommands = new String(b, 0, numRead);
 				numRead = urlRobotStream.read(b);
 				
 				if (numRead != -1) {
