@@ -24,14 +24,13 @@ public class WebCrawler implements Runnable {
 	public static final String DISALLOW = "Disallow:";
 	public String urlLink;
 	
-	private HashSet<String> links;
+	public static HashSet<String> links = new HashSet<String>();
 
     public WebCrawler(String urlLink) {
-        links = new HashSet<String>();
         this.urlLink = urlLink;
     }
 
-    public void getPageLinks(String URL) {
+    public void getPageLinks(String URL, String title) {
         //4. Check if you have already crawled the URLs 
         //(we are intentionally not checking for duplicate content in this example)
         if (!links.contains(URL)) {
@@ -39,8 +38,8 @@ public class WebCrawler implements Runnable {
                 //4. (i) If not add it to the index
                 if (links.add(URL)) {
                     System.out.println(URL);
-            		count++;
-            		saveHTML(URL);
+                    saveHTML(URL, String.valueOf(count) + title);
+                    count++;
                 }
 
                 //2. Fetch the HTML code
@@ -51,9 +50,9 @@ public class WebCrawler implements Runnable {
                 //5. For each extracted URL... go back to Step 4.
                 for (Element page : linksOnPage) {
                 	String url = null;
-                	if (count < MAX_NUM && robotSafe(url = page.attr("abs:href"))) {
+                	if (links.size() < MAX_NUM && robotSafe(url = page.attr("abs:href"))) {
 //            		if (links.size() < MAX_NUM) {
-                		getPageLinks(url);
+                		getPageLinks(url, page.attr("title"));
                 	}
                 	else
                 		break;
@@ -143,7 +142,7 @@ public class WebCrawler implements Runnable {
     }
     
     // to save html
-    public static void saveHTML(String webpage) {
+    public void saveHTML(String webpage, String title) {
     	try { 
     		  
             // Create URL object 
@@ -153,7 +152,7 @@ public class WebCrawler implements Runnable {
   
             // Enter filename in which you want to download 
             BufferedWriter writer =  
-              new BufferedWriter(new FileWriter("html/" + webpage + ".html")); 
+              new BufferedWriter(new FileWriter("html/" + title + ".html")); 
               
             // read each line from stream till end 
             String line; 
@@ -189,7 +188,7 @@ public class WebCrawler implements Runnable {
 
 	@Override
 	public void run() {
-		getPageLinks(urlLink);
+		getPageLinks(urlLink, "");
 		
 	}
 
