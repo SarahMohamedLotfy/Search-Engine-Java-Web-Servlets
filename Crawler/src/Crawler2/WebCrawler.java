@@ -35,6 +35,7 @@ public class WebCrawler implements Runnable {
                 //4. (i) If not add it to the index
                 if (links.add(URL)) {
                     System.out.println(URL);
+            		count++;
                 }
 
                 //2. Fetch the HTML code
@@ -47,7 +48,6 @@ public class WebCrawler implements Runnable {
                 	String url = null;
                 	if (count < MAX_NUM && robotSafe(url = page.attr("abs:href"))) {
 //            		if (links.size() < MAX_NUM) {
-                		count++;
                 		getPageLinks(url);
                 	}
                 	else
