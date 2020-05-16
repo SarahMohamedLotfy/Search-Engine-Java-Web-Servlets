@@ -12,6 +12,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import WebCrawler.example1;
+
 public class WebCrawler implements Runnable {
 	
 	public static int count = 0;
@@ -140,9 +142,13 @@ public class WebCrawler implements Runnable {
     public static void main(String[] args) {
         //1. Pick a URL from the frontier
 //        new WebCrawler().getPageLinks("https://en.wikipedia.org/");
-        Thread crawlerThread2 = new Thread(new WebCrawler("https://en.wikipedia.org/"));
-		
-		crawlerThread2.start();
+    	int numberOfThreads = 3;
+    	Thread crawlerThreads[] = new Thread[numberOfThreads];
+    	
+    	for (int i = 0; i < numberOfThreads; ++i) {
+    		crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/"));
+    		crawlerThreads[i].start();
+    	}
     }
 
 	@Override
