@@ -13,6 +13,14 @@ import java.nio.file.Paths;
 
 public class main {
     public static void main(String[] args)throws IOException {
+    	// Crawler //
+    	int numberOfThreads = 3;
+    	Thread crawlerThreads[] = new Thread[numberOfThreads];
+    	
+    	for (int i = 0; i < numberOfThreads; ++i) {
+    		crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/"));
+    		crawlerThreads[i].start();
+    	}
 
 
         //Extractor ///

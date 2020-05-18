@@ -1,4 +1,4 @@
-package Crawler2;
+package com.tutorialspoint.lucene;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -193,3 +193,4 @@ public class WebCrawler implements Runnable {
 	}
 
 }
+
