@@ -2,10 +2,14 @@
   <library name="commons-io-2.6">
     <CLASSES>
       <root url="jar://$USER_HOME$/Downloads/commons-io-2.6-bin/commons-io-2.6/commons-io-2.6.jar!/" />
+      <root url="jar://D:/download gded/Stemmer-master/Stemmer-master/common-lang3.jar!/" />
+      <root url="jar://D:/download gded/Stemmer-master/Stemmer-master/lucene-snowball-3.0.2.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/Downloads/commons-io-2.6-bin/commons-io-2.6/commons-io-2.6-javadoc.jar!/" />
     </JAVADOC>
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://D:/download gded/Stemmer-master/Stemmer-master/common-lang3.jar!/" />
+    </SOURCES>
   </library>
 </component>
