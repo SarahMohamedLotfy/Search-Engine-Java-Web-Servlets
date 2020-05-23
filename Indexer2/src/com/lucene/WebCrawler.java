@@ -1,5 +1,6 @@
 package com.lucene;
 
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -24,9 +25,6 @@ public class WebCrawler implements Runnable {
 	public static final boolean DEBUG = false;
 	public static final String DISALLOW = "Disallow:";
 	public String urlLink;
-	public static int[] foundWords = new int[MAX_NUM];
-	public static String word = "";
-	public static boolean wantToFindWord = false;
 	
 	public static HashSet<String> links = new HashSet<String>();
 
@@ -62,7 +60,6 @@ public class WebCrawler implements Runnable {
                 		break;
                 }
                 saveLinks();
-                if (wantToFindWord) mostRelevantToWord();
             } catch (IOException e) {
                 System.err.println("For '" + URL + "': " + e.getMessage());
             }
@@ -162,11 +159,8 @@ public class WebCrawler implements Runnable {
               
             // read each line from stream till end 
             String line; 
-            int count = 0;
             while ((line = readr.readLine()) != null) { 
             	// find a specific word here
-            	count += findWord(word, line);
-            	foundWords[Integer.valueOf(title.charAt(0)) - 48] = count;
                 writer.write(line); 
             }
   
@@ -206,8 +200,12 @@ public class WebCrawler implements Runnable {
     	try {
     	      FileWriter myWriter = new FileWriter("URLs.txt");
     	      Iterator<String> i = links.iterator(); 
-    	        while (i.hasNext()) 
-    	            myWriter.write(i.next() + "\n"); 
+    	      
+    	        while (i.hasNext()) {
+    	        	myWriter.write(i.next() + "\n"); 
+    	        	DataFromIndexer.linksFromCrawler.add(i.next());
+    	        }
+    	            
     	      myWriter.close();
     	      System.out.println("Successfully wrote to the file.");
     	    } catch (IOException e) {
@@ -217,35 +215,6 @@ public class WebCrawler implements Runnable {
     	  
     }
 	
-	public void mostRelevantToWord() {
-    	try {
-  	      FileWriter myWriter = new FileWriter("mostFound.txt");
-	    	int[] visited = new int[MAX_NUM];
-	    	int min = 0;
-	    	for (int j = 0; j < MAX_NUM; ++j)
-	    		{
-	    		visited[j] = 0;
-	    		if (foundWords[j] < foundWords[min])
-	    			min = j;
-	    		}
-	    	  for (int j = 0; j < MAX_NUM; ++j) {
-	    		  int maxIndex = min;
-	    		  for (int k = 0; k < MAX_NUM; ++k) {
-	    			  if (foundWords[k] > foundWords[maxIndex] && visited[k] == 0)
-	    				  maxIndex = k;
-	    		  }
-	    		  visited[maxIndex] = 1;
-	    		myWriter.write(links.toArray()[maxIndex] + "\n");
-	    	  }
-  	      
-  	      myWriter.close();
-  	      System.out.println("Successfully wrote to the file.");
-  	    } catch (IOException e) {
-  	      System.out.println("An error occurred.");
-  	      e.printStackTrace();
-  	    }
-    }
-	
 	public int findWord(String word, String line) {
     	int count = 0;
     	boolean isFound = (line.toLowerCase()).contains(word.toLowerCase());
@@ -253,11 +222,6 @@ public class WebCrawler implements Runnable {
     		count++;
     	}
     	return count;
-    }
-
-    public void searchPhrase(String phrase) {
-    	wantToFindWord = true;
-    	word = phrase;
     }
 
 }
