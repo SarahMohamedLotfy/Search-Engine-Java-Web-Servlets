@@ -12,6 +12,7 @@ public class DataFromIndexer<integer> {
     public List<Integer> occurencesOfWordsInHeader;
     public List<Integer> occurencesOfWordsInPlainText;
     public List<String> images;
+    public static List<String> linksFromCrawler;
 
 
     public  DataFromIndexer() {
@@ -23,6 +24,7 @@ public class DataFromIndexer<integer> {
         occurencesOfWordsInHeader=new ArrayList<Integer>();
         occurencesOfWordsInPlainText=new ArrayList<Integer>();
         images=new ArrayList<String>();
+        linksFromCrawler = new ArrayList<String>();
 
     }
     public void SetDataFromIndexer(List<String>  documentsNametemp,List<String> documentsBodyemp,
