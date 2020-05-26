@@ -13,6 +13,9 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 public class main {
+	public static String word = "";
+	public static boolean wantToFindWord = false;
+	
     public static void main(String[] args) throws IOException, SQLException {
     	// Crawler //
     	//int numberOfThreads = 3;

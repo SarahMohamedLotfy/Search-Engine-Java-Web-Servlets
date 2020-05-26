@@ -26,8 +26,9 @@ public class WebCrawler implements Runnable {
 	public String urlLink;
 
 	public static int[] foundWords = new int[MAX_NUM];
-	public static String word = "";
-	public static boolean wantToFindWord = false;
+//	public static String word = "";
+//	public static boolean wantToFindWord = false;
+	public static String phrase = "";
 	
 	public static HashSet<String> links = new HashSet<String>();
 
@@ -63,7 +64,7 @@ public class WebCrawler implements Runnable {
                 	else
                 		break;
                 	saveLinks();
-                    if (wantToFindWord) mostRelevantToWord();
+                    if (main.wantToFindWord) mostRelevantToWord();
                 }
             } catch (IOException e) {
                 System.err.println("For '" + URL + "': " + e.getMessage());
@@ -167,8 +168,10 @@ public class WebCrawler implements Runnable {
             int count = 0;
             while ((line = readr.readLine()) != null) { 
             	// find a specific word here
-            	count += findWord(word, line);
-            	foundWords[Integer.valueOf(title.charAt(0)) - 48] = count;
+            	if (main.wantToFindWord) {
+	            	count += findWord(main.word, line);
+	            	foundWords[Integer.valueOf(title.charAt(0)) - 48] = count;
+            	}
                 writer.write(line); 
             }
   
@@ -233,6 +236,7 @@ public class WebCrawler implements Runnable {
   	      FileWriter myWriter = new FileWriter("mostFound.txt");
 	    	int[] visited = new int[MAX_NUM];
 	    	int min = 0;
+	    	DataFromIndexer.urlsFromCrawler.clear();
 	    	for (int j = 0; j < MAX_NUM; ++j)
 	    		{
 	    		visited[j] = 0;
@@ -247,6 +251,7 @@ public class WebCrawler implements Runnable {
 	    		  }
 	    		  visited[maxIndex] = 1;
 	    		myWriter.write(links.toArray()[maxIndex] + "\n");
+	    		DataFromIndexer.AddFromCrawler(links.toArray()[maxIndex].toString());
 	    	  }
   	      
   	      myWriter.close();
@@ -257,10 +262,10 @@ public class WebCrawler implements Runnable {
   	    }
     }
     
-    public void searchPhrase(String phrase) {
-    	wantToFindWord = true;
-    	word = phrase;
-    }
+//    public void searchPhrase(String phrase) {
+//    	main.wantToFindWord = true;
+//    	main.word = phrase;
+//    }
 
 }
 
