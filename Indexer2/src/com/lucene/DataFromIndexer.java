@@ -15,6 +15,7 @@ public class DataFromIndexer<integer> {
     public List<String> titlelist;
     public List<String> headerslist;
     public List<String> plaintextlist;
+    public static List<String> urlsFromCrawler;
 
     public  DataFromIndexer() {
         documentsName =new ArrayList<String>();
@@ -28,6 +29,7 @@ public class DataFromIndexer<integer> {
         titlelist=new ArrayList<String>();
         headerslist=new ArrayList<String>();
         plaintextlist=new ArrayList<String>();
+        urlsFromCrawler = new ArrayList<String>();
 
     }
     public void SetDataFromIndexer(List<String>  documentsNametemp,List<String> documentsBodyemp,
@@ -47,3 +49,8 @@ public class DataFromIndexer<integer> {
         this.plaintextlist = plaintexttemp;
 
     }
+    
+    public static void AddFromCrawler(String url) {
+    	urlsFromCrawler.add(url);
+    }
+}
