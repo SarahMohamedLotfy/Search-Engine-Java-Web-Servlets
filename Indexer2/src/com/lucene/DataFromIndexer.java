@@ -12,8 +12,9 @@ public class DataFromIndexer<integer> {
     public List<Integer> occurencesOfWordsInHeader;
     public List<Integer> occurencesOfWordsInPlainText;
     public List<String> images;
-    public static List<String> linksFromCrawler;
-
+    public List<String> titlelist;
+    public List<String> headerslist;
+    public List<String> plaintextlist;
 
     public  DataFromIndexer() {
         documentsName =new ArrayList<String>();
@@ -24,20 +25,25 @@ public class DataFromIndexer<integer> {
         occurencesOfWordsInHeader=new ArrayList<Integer>();
         occurencesOfWordsInPlainText=new ArrayList<Integer>();
         images=new ArrayList<String>();
-        linksFromCrawler = new ArrayList<String>();
+        titlelist=new ArrayList<String>();
+        headerslist=new ArrayList<String>();
+        plaintextlist=new ArrayList<String>();
 
     }
     public void SetDataFromIndexer(List<String>  documentsNametemp,List<String> documentsBodyemp,
-                           List<Integer> occurencesOfWordsCounttemp,List<Integer> occurencesOfWordsInTitletemp,List<Integer> occurencesOfWordsInHeadertemp,
-                           List<Integer> occurencesOfWordsInPlainTexttemp,List<String>  imagestemp) {
+                                   List<Integer> occurencesOfWordsCounttemp,List<Integer> occurencesOfWordsInTitletemp,List<Integer> occurencesOfWordsInHeadertemp,
+                                   List<Integer> occurencesOfWordsInPlainTexttemp,List<String>  imagestemp,
+                                   List<String>  titletemp,List<String>  headertemp,List<String>  plaintexttemp) {
         this.documentsName = documentsNametemp;
-       // this.documentsAddresss = documentsAddressstemp;
+        // this.documentsAddresss = documentsAddressstemp;
         this.documentsBody = documentsBodyemp;
         this.occurencesOfWordsCount = occurencesOfWordsCounttemp;
         this.occurencesOfWordsInTitle =occurencesOfWordsInTitletemp ;
         this.occurencesOfWordsInHeader= occurencesOfWordsInHeadertemp;
         this.occurencesOfWordsInPlainText = occurencesOfWordsInPlainTexttemp;
         this.images = imagestemp;
-    }
+        this.titlelist = titletemp;
+        this.headerslist = headertemp;
+        this.plaintextlist = plaintexttemp;
 
-}
+    }

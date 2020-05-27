@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.io.*;
 
 
+import Stemmer.Stemmer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.ScoreDoc;
@@ -29,7 +30,7 @@ import java.util.Vector;
 public class LuceneTester {
 
     String indexDir = "D:\\Index";
-    String dataDir = "D:\\download gded\\Library for indexer\\Indexer2";
+    String dataDir = "D:\\download gded\\Indexer\\Indexer2";
     Indexer indexer;
     Searcher searcher;
 
@@ -62,6 +63,9 @@ public class LuceneTester {
         List<Integer> occurencesOfWordsInHeader=new ArrayList<Integer>();
         List<Integer> occurencesOfWordsInPlainText=new ArrayList<Integer>();
         List<String> images=new ArrayList<String>();
+        List<String> titleslist=new ArrayList<String>();
+        List<String> headerslist=new ArrayList<String>();
+        List<String> plaintextlist=new ArrayList<String>();
 
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
             Document doc = searcher.getDocument(scoreDoc);
@@ -123,11 +127,11 @@ public class LuceneTester {
                         int headerCount=0;
                         int plainTextCount =0;
                         for (int n=0;n < positions.size();n++) {
-                              if(positions.get(n)< commaPositions.get(0)) {
-                                  titleCount ++;
-                              }
+                            if(positions.get(n)< commaPositions.get(0)) {
+                                titleCount ++;
+                            }
                             else if(positions.get(n)< commaPositions.get(1)) {
-                                  headerCount ++;
+                                headerCount ++;
                             }
                             else
                                 plainTextCount++;
@@ -155,6 +159,23 @@ public class LuceneTester {
                                 images.add( el.attr("src") );
                                 System.out.println("image tag: " + el.attr("src") + " Alt: " + el.attr("alt"));
                             }
+                            //Title
+                            String title = "";
+                            title = htmllDoc.title();
+                            //Headers
+                            Element body = htmllDoc.body();
+                            Elements paragraphs = body.getElementsByTag("header");
+                            String header ="";
+                            for (Element paragraph : paragraphs) {
+                                header = header+paragraph.text();
+                            }
+                            // Plain text
+                            String allBody = htmllDoc.body().text();
+                            String titleheader = title +" "+ header + " ";
+                            String plaintext = allBody.replaceAll(titleheader, "");
+                            titleslist.add(title);
+                            headerslist.add(header);
+                            plaintextlist.add(plaintext);
                         }
                     }
                     break;
@@ -162,7 +183,7 @@ public class LuceneTester {
                 count ++;
             }
         }
-        data.SetDataFromIndexer(documentsName,documentsBody,occurencesOfWordsCount,occurencesOfWordsInTitle,occurencesOfWordsInHeader,occurencesOfWordsInPlainText,images);
+        data.SetDataFromIndexer(documentsName,documentsBody,occurencesOfWordsCount,occurencesOfWordsInTitle,occurencesOfWordsInHeader,occurencesOfWordsInPlainText,images,titleslist,headerslist,plaintextlist);
         searcher.close();
     }
 }
