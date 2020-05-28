@@ -20,21 +20,23 @@ import org.jsoup.select.Elements;
 public class WebCrawler implements Runnable {
 	
 	public static int count = 0;
-	public static final int MAX_NUM = 5000;
+	//public static final int MAX_NUM = 5;
 	public static final boolean DEBUG = true;
 	public static final String DISALLOW = "Disallow:";
 	public String urlLink;
+	public static int numberOfurls;
 
-	public static int[] foundWords = new int[MAX_NUM];
-//	public static String word = "";
+    public WebCrawler(String urlLink,int numberOfurls) {
+        this.urlLink = urlLink;
+        this.numberOfurls=numberOfurls;
+
+    }
+	public static int[] foundWords = new int[numberOfurls];
+	//	public static String word = "";
 //	public static boolean wantToFindWord = false;
 	public static String phrase = "";
-	
-	public static HashSet<String> links = new HashSet<String>();
 
-    public WebCrawler(String urlLink) {
-        this.urlLink = urlLink;
-    }
+	public static HashSet<String> links = new HashSet<String>();
 
     public void getPageLinks(String URL, String title) {
         //4. Check if you have already crawled the URLs 
@@ -57,8 +59,8 @@ public class WebCrawler implements Runnable {
                 //5. For each extracted URL... go back to Step 4.
                 for (Element page : linksOnPage) {
                 	String url = null;
-                	if (links.size() < MAX_NUM && robotSafe(url = page.attr("abs:href"))) {
-//            		if (links.size() < MAX_NUM) {
+                	if (links.size() < numberOfurls && robotSafe(url = page.attr("abs:href"))) {
+//            		if (links.size() < numberOfurls) {
                 		getPageLinks(url, page.attr("title"));
                 	}
                 	else
@@ -196,7 +198,7 @@ public class WebCrawler implements Runnable {
     	Thread crawlerThreads[] = new Thread[numberOfThreads];
     	
     	for (int i = 0; i < numberOfThreads; ++i) {
-    		crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/"));
+    		crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/",numberOfurls));
     		crawlerThreads[i].start();
     	}
     }
@@ -234,18 +236,18 @@ public class WebCrawler implements Runnable {
     public void mostRelevantToWord() {
     	try {
   	      FileWriter myWriter = new FileWriter("mostFound.txt");
-	    	int[] visited = new int[MAX_NUM];
+	    	int[] visited = new int[numberOfurls];
 	    	int min = 0;
 	    	DataFromIndexer.urlsFromCrawler.clear();
-	    	for (int j = 0; j < MAX_NUM; ++j)
+	    	for (int j = 0; j < numberOfurls; ++j)
 	    		{
 	    		visited[j] = 0;
 	    		if (foundWords[j] < foundWords[min])
 	    			min = j;
 	    		}
-	    	  for (int j = 0; j < MAX_NUM; ++j) {
+	    	  for (int j = 0; j < numberOfurls; ++j) {
 	    		  int maxIndex = min;
-	    		  for (int k = 0; k < MAX_NUM; ++k) {
+	    		  for (int k = 0; k < numberOfurls; ++k) {
 	    			  if (foundWords[k] > foundWords[maxIndex] && visited[k] == 0)
 	    				  maxIndex = k;
 	    		  }

@@ -1,11 +1,12 @@
 package com.lucene;
+import com.sun.deploy.net.MessageHeader;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataFromIndexer<integer> {
 
     public List<String>  documentsName ;
-    //public List<String> documentsAddresss;
     public List<String> documentsBody;
     public List<Integer> occurencesOfWordsCount;
     public List<Integer> occurencesOfWordsInTitle;
@@ -16,10 +17,10 @@ public class DataFromIndexer<integer> {
     public List<String> headerslist;
     public List<String> plaintextlist;
     public static List<String> urlsFromCrawler;
+    public List<String>urlsFromIndexer;
 
     public  DataFromIndexer() {
         documentsName =new ArrayList<String>();
-        //documentsAddresss=new ArrayList<String>();
         documentsBody=new ArrayList<String>();
         occurencesOfWordsCount=new ArrayList<Integer>();
         occurencesOfWordsInTitle=new ArrayList<Integer>();
@@ -30,14 +31,14 @@ public class DataFromIndexer<integer> {
         headerslist=new ArrayList<String>();
         plaintextlist=new ArrayList<String>();
         urlsFromCrawler = new ArrayList<String>();
+        urlsFromIndexer = new ArrayList<String>();
 
     }
     public void SetDataFromIndexer(List<String>  documentsNametemp,List<String> documentsBodyemp,
                                    List<Integer> occurencesOfWordsCounttemp,List<Integer> occurencesOfWordsInTitletemp,List<Integer> occurencesOfWordsInHeadertemp,
                                    List<Integer> occurencesOfWordsInPlainTexttemp,List<String>  imagestemp,
-                                   List<String>  titletemp,List<String>  headertemp,List<String>  plaintexttemp) {
+                                   List<String>  titletemp,List<String>  headertemp,List<String>  plaintexttemp,List<String> urlsFromIndexertemp) {
         this.documentsName = documentsNametemp;
-        // this.documentsAddresss = documentsAddressstemp;
         this.documentsBody = documentsBodyemp;
         this.occurencesOfWordsCount = occurencesOfWordsCounttemp;
         this.occurencesOfWordsInTitle =occurencesOfWordsInTitletemp ;
@@ -47,7 +48,7 @@ public class DataFromIndexer<integer> {
         this.titlelist = titletemp;
         this.headerslist = headertemp;
         this.plaintextlist = plaintexttemp;
-
+        this.urlsFromIndexer= urlsFromIndexertemp;
     }
     
     public static void AddFromCrawler(String url) {

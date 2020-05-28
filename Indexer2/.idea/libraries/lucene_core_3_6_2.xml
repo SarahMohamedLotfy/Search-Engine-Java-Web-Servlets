@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="lucene-core-3.6.2">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../lucene-3.6.2/lucene-3.6.2/lucene-core-3.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Library for indexer/lucene-core-3.6.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

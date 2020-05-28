@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import Stemmer.Stemmer;
 import org.apache.lucene.document.Document;
@@ -30,7 +31,7 @@ import java.util.Vector;
 public class LuceneTester {
 
     String indexDir = "D:\\Index";
-    String dataDir = "D:\\download gded\\Indexer\\Indexer2";
+    String dataDir = "C:\\Users\\hi\\Documents\\GitHub\\APT-Search-Engine\\Indexer2";
     Indexer indexer;
     Searcher searcher;
 
@@ -45,7 +46,7 @@ public class LuceneTester {
                 +(endTime-startTime)+" ms");
     }
 
-    public void search(String search_word,DataFromIndexer data, String htmlPath) throws IOException, ParseException {
+    public void search(String search_word,DataFromIndexer data, String htmlPath, List<String> urlsFromCrawler) throws IOException, ParseException {
         searcher = new Searcher(indexDir);
         long startTime = System.currentTimeMillis();
         TopDocs hits = searcher.search(search_word);
@@ -66,6 +67,7 @@ public class LuceneTester {
         List<String> titleslist=new ArrayList<String>();
         List<String> headerslist=new ArrayList<String>();
         List<String> plaintextlist=new ArrayList<String>();
+        List<String> urlsFromIndexer=new ArrayList<String>();
 
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
             Document doc = searcher.getDocument(scoreDoc);
@@ -81,9 +83,18 @@ public class LuceneTester {
 
             String[] searched_words = search_word.split(" ");
 
+
             // Get the file include each word in searched words
             for (File child : directoryListing) {
                 if (count ==i) {
+
+                    //Urls fromIndexer
+                    System.out.println("cooount   "+count);
+                    System.out.println(urlsFromCrawler.size());
+                    System.out.println(urlsFromCrawler.size());
+
+                    String url=urlsFromCrawler.get(count-1);
+                    urlsFromIndexer.add(url);
 
                     System.out.println("File name: " + child.getName());
                     documentsName.add(child.getName());
@@ -157,7 +168,7 @@ public class LuceneTester {
                             // Loop through img tags
                             for (Element el : img) {
                                 images.add( el.attr("src") );
-                                System.out.println("image tag: " + el.attr("src") + " Alt: " + el.attr("alt"));
+                              //  System.out.println("image tag: " + el.attr("src") + " Alt: " + el.attr("alt"));
                             }
                             //Title
                             String title = "";
@@ -183,7 +194,25 @@ public class LuceneTester {
                 count ++;
             }
         }
-        data.SetDataFromIndexer(documentsName,documentsBody,occurencesOfWordsCount,occurencesOfWordsInTitle,occurencesOfWordsInHeader,occurencesOfWordsInPlainText,images,titleslist,headerslist,plaintextlist);
+        data.SetDataFromIndexer(documentsName,documentsBody,occurencesOfWordsCount,occurencesOfWordsInTitle,occurencesOfWordsInHeader,occurencesOfWordsInPlainText,images,titleslist,headerslist,plaintextlist,urlsFromIndexer);
         searcher.close();
+    }
+
+
+
+    public void delete(String htmlPath,String filenamePath) throws IOException
+    {
+        File folder = new File(htmlPath);
+        for (File f : folder.listFiles()) {
+            if (f.getName().endsWith(".html")) {
+                f.delete();
+            }
+        }
+        File folder2 = new File(filenamePath);
+        for (File f : folder2.listFiles()) {
+            if (f.getName().endsWith(".txt")) {
+                f.delete();
+            }
+        }
     }
 }
