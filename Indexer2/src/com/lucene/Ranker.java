@@ -1,8 +1,6 @@
 package com.lucene;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDate;
 import java.util.*;
 
 public class Ranker
@@ -12,13 +10,16 @@ public class Ranker
     DataFromIndexer data;
     int numofdocs;
     String UserLocation;
-    public Ranker(DataFromIndexer data,String searchString,String Location)
+    Boolean wantLocationScore,wantDateScore;
+    public Ranker(DataFromIndexer data,String searchString,String Location,Boolean wantLocationScore,Boolean wantDateScore)
     {
-        numofdocs =data.documentsName.size();
+        numofdocs =data.documentsName.size(); // documentsName has same size and indexing as URLs list
         searchArray = searchString.split(" ");
         this.data = data;
         UserLocation =Location;
         countrycodesinit();
+        this.wantDateScore = wantDateScore;
+        this.wantLocationScore = wantLocationScore;
     }
 
     public double tf(int wordindex, List<Integer> occurencesOfWordsCount, int docindex, List <String>documentsBody)
@@ -69,25 +70,30 @@ public class Ranker
             }});
     }
 
-    public Set<String> rank(DataFromIndexer data,List<String> Urls)
+    public Set<String> rank(DataFromIndexer data,List<String> Urls) throws IOException
     {
         Hashtable<String, Double> rankedList = new Hashtable<String, Double>();
         for (int i = 0; i < numofdocs; i++)
         {
-            rankedList.put(Urls.get(i), tf_idf(i, data.occurencesOfWordsCount, data.documentsBody));
+            Double relevenceScore = tf_idf(i, data.occurencesOfWordsCount, data.documentsBody);
+            if (wantLocationScore && wantDateScore)
+            {
+                relevenceScore += FindCountryCode(Urls.get(i)) + FindsiteDate(Urls.get(i)) ;
+                relevenceScore /= Double.valueOf(3);
+            }
+            else if (wantLocationScore || wantDateScore)
+            {
+                if (wantLocationScore)
+                    relevenceScore += FindCountryCode(Urls.get(i));
+                else
+                    relevenceScore += FindsiteDate(Urls.get(i)) ;
+                relevenceScore /= Double.valueOf(2);
+            }
+            rankedList.put(Urls.get(i), relevenceScore);
             sortValue(rankedList);
 
         }
         Set<String> output = rankedList.keySet();
-        return output;
-    }
-    public Double dateRelevence(String siteDate)
-    {
-        LocalDate Dateofdevice = java.time.LocalDate.now();
-        LocalDate FormattedSiteDate = LocalDate.parse(siteDate);
-        Duration difference = Duration.between(FormattedSiteDate, Dateofdevice);
-        Long differenceInDays = difference.toDays();
-        Double output = differenceInDays.doubleValue();
         return output;
     }
     public Double FindCountryCode(String Url) throws IOException
@@ -100,7 +106,20 @@ public class Ranker
                 return(DownloadPage.distanceRelevence(UserLocation, countryCodes.get(key)));
             }
         }
-        return Double.valueOf(0);
+        return Double.valueOf(0.5); //default value if no country code exists
+    }
+    public Double FindsiteDate(String URL)
+    {
+        double defaultValue = .5;
+        try
+        {
+            Double output = DownloadPage.dateRelevence(URL);
+            return output;
+        } catch (Exception e)
+        {
+            System.out.println("failed to get date ... returning default value");
+            return defaultValue;
+        }
     }
     public void countrycodesinit()
     {

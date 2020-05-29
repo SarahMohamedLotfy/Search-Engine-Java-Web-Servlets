@@ -1,10 +1,10 @@
 package com.lucene;
-import com.sun.deploy.net.MessageHeader;
+//import com.sun.deploy.net.MessageHeader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataFromIndexer<integer> {
+public class DataFromIndexer {
 
     public List<String>  documentsName ;
     public List<String> documentsBody;
@@ -50,8 +50,8 @@ public class DataFromIndexer<integer> {
         this.plaintextlist = plaintexttemp;
         this.urlsFromIndexer= urlsFromIndexertemp;
     }
-    
+
     public static void AddFromCrawler(String url) {
-    	urlsFromCrawler.add(url);
+        urlsFromCrawler.add(url);
     }
 }
