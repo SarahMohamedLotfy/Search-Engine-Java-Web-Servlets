@@ -21,14 +21,17 @@ public class main {
 		// Crawler //
 		int numberOFurls =5;
 		int numberOfThreads = 3;
+		String  htmlPath= System.getProperty("user.dir") + "\\html";
+		String filenamePath =System.getProperty("user.dir");
+		String search_sentence ="Douglas featured collabor red important";
+
+
 		Thread crawlerThreads[] = new Thread[numberOfThreads];
 		for (int i = 0; i < numberOfThreads; ++i) {
 			crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/", numberOFurls));
 			crawlerThreads[i].start();
 		}
-		String  htmlPath= System.getProperty("user.dir") + "\\html";
-		String filenamePath =System.getProperty("user.dir");
-		String search_sentence ="Douglas featured collabor red important";
+
 
 		//Extractor ///
 		DataFromIndexer data = new DataFromIndexer ();
@@ -43,15 +46,17 @@ public class main {
 		//Indexer
 		LuceneTester tester;
 		try {
+			long startTimeIndexer = System.currentTimeMillis();
 			tester = new LuceneTester();
 			tester.createIndex();
 			tester.search(search_sentence,data,htmlPath,data.urlsFromCrawler);
 			tester.delete(htmlPath,filenamePath);
+			long endTimeIndexer = System.currentTimeMillis();
+			System.out.println("Indexer, time taken: " +(endTimeIndexer-startTimeIndexer)+" ms");
 		}
 		catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-
 		//Ranker
 		Boolean wantLocationScore = false;
 		Boolean wantDateScore = false;

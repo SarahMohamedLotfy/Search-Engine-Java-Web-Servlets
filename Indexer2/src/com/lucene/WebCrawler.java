@@ -163,9 +163,12 @@ public class WebCrawler implements Runnable {
   
             // Enter filename in which you want to download 
             BufferedWriter writer =  
-              new BufferedWriter(new FileWriter("html/" + title + ".html")); 
-              
-            // read each line from stream till end 
+              new BufferedWriter(new FileWriter("html/" + title + ".html"));
+
+			BufferedWriter writer2 =
+					new BufferedWriter(new FileWriter("html2/" + title + ".html"));
+
+			// read each line from stream till end
             String line; 
             int count = 0;
             while ((line = readr.readLine()) != null) { 
@@ -174,12 +177,17 @@ public class WebCrawler implements Runnable {
 	            	count += findWord(main.word, line);
 	            	foundWords[Integer.valueOf(title.charAt(0)) - 48] = count;
             	}
-                writer.write(line); 
-            }
+                writer.write(line);
+				writer2.write(line);
+
+
+			}
   
             readr.close(); 
-            writer.close(); 
-            System.out.println("Successfully Downloaded."); 
+            writer.close();
+			writer2.close();
+
+			System.out.println("Successfully Downloaded.");
         } 
   
         // Exceptions 

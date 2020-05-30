@@ -6,7 +6,6 @@ import org.apache.lucene.queryParser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.*;
 import java.nio.file.*;
 import java.sql.*;
@@ -53,13 +52,13 @@ public class Extractor {
                 String filePath = pathh + "\\" + event.context();
                 if (event.kind() ==ENTRY_MODIFY && !filePath.equals(lastfilepath)) {
                     countfiles++;
-                    System.out.println("saaaaaaaaaeh   " + filePath+"    "+file.toFile().lastModified());
+                    System.out.println("file path   " + filePath+"    "+file.toFile().lastModified());
                     String multihtml = new String(Files.readAllBytes(Paths.get(filePath)));
                     String[] htmlParts = multihtml.split("(?<=</html>)");
                     org.jsoup.nodes.Document doc;
                     for (String part : htmlParts) {
                         doc = Jsoup.parse(part);
-                        System.out.println("");
+
                         //Title
                         String title = "";
                         title = doc.title();
@@ -102,7 +101,6 @@ public class Extractor {
                         string = string.replaceAll(tempWord, "");
 
                         System.out.println("body:  " + string);
-                        System.out.println("******************************************");
 
                         if (!title.isEmpty() || !header.isEmpty() || !string.isEmpty()) {
                             // Write in files and database
@@ -114,8 +112,6 @@ public class Extractor {
                                 myWriter.write(title + " , " + header + " , " + string);
                                 myWriter.close();
                                 i++;
-                                System.out.println("iiivalue =  "+i);
-
                                 System.out.println("Successfully wrote to the file.");
                                  lastfilepath = filePath;
                             } catch (IOException e) {
@@ -127,7 +123,6 @@ public class Extractor {
                 }
             if (countfiles==numberOfUrls)
             {
-
                 break;
             }
             }

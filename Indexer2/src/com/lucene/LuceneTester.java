@@ -38,22 +38,14 @@ public class LuceneTester {
     public void createIndex() throws IOException {
         indexer = new Indexer(indexDir);
         int numIndexed;
-        long startTime = System.currentTimeMillis();
         numIndexed = indexer.createIndex(dataDir, new TextFileFilter());
-        long endTime = System.currentTimeMillis();
         indexer.close();
-        System.out.println(numIndexed+" File indexed, time taken: "
-                +(endTime-startTime)+" ms");
     }
 
     public void search(String search_word,DataFromIndexer data, String htmlPath, List<String> urlsFromCrawler) throws IOException, ParseException {
         searcher = new Searcher(indexDir);
-        long startTime = System.currentTimeMillis();
-        TopDocs hits = searcher.search(search_word);
-        long endTime = System.currentTimeMillis();
 
-        System.out.println(hits.totalHits +
-                " documents found. Time :" + (endTime - startTime));
+        TopDocs hits = searcher.search(search_word);
 
 
         // List of names of html documents found
@@ -205,12 +197,6 @@ public class LuceneTester {
         File folder = new File(htmlPath);
         for (File f : folder.listFiles()) {
             if (f.getName().endsWith(".html")) {
-                f.delete();
-            }
-        }
-        File folder2 = new File(filenamePath);
-        for (File f : folder2.listFiles()) {
-            if (f.getName().endsWith(".txt")) {
                 f.delete();
             }
         }
