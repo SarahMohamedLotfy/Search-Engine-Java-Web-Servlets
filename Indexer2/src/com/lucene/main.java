@@ -23,7 +23,17 @@ public class main {
 		int numberOfThreads = 3;
 		String  htmlPath= System.getProperty("user.dir") + "\\html";
 		String filenamePath =System.getProperty("user.dir");
-		String search_sentence ="Douglas featured collabor red important";
+//		String search_sentence ="Douglas featured collabor red important";
+		String search_sentence ="\"wikipedia free\" encyclopedia";
+		// remove quotes from the sentence
+		StringBuilder sb = new StringBuilder(search_sentence);
+		String resultString = sb.toString();
+		while (resultString.contains("\"")) {
+			sb.deleteCharAt(resultString.indexOf("\""));
+			resultString = sb.toString();
+		}
+		String search_phrase = search_sentence;
+		search_sentence = resultString;
 
 
 		Thread crawlerThreads[] = new Thread[numberOfThreads];
@@ -74,6 +84,22 @@ public class main {
 		System.out.println(data.urlsFromIndexer);
 		//ranker output
 		System.out.println(ranker.rank(data, data.urlsFromIndexer));
+
+
+		////////////// Phrase Search ///////////////////
+		System.out.println("**********************");
+		PhraseSearch phraseSearch = new PhraseSearch(search_phrase, data.occurencesOfWordsCount, data.documentsName);
+		boolean phraseSearchTest = phraseSearch.checkPhraseSearch();
+		if (phraseSearchTest){
+			phraseSearch.countPhrase();
+			System.out.println(phraseSearch.wordsToBeSearch);
+			for (int i = 0; i < phraseSearch.foundWords.length; ++i)
+				System.out.println(" index " + i + " = " + phraseSearch.foundWords[i]);
+		}
+		else {
+			System.out.println("no phrase search");
+		}
+		////////////// Phrase Search ///////////////////
 
 	}
 }

@@ -17,7 +17,8 @@ public class DataFromIndexer {
     public List<String> headerslist;
     public List<String> plaintextlist;
     public static List<String> urlsFromCrawler;
-    public List<String>urlsFromIndexer;
+    public static List<String>urlsFromIndexer;
+    public static List<String> documentsPhraseSearch;
 
     public  DataFromIndexer() {
         documentsName =new ArrayList<String>();
@@ -32,6 +33,7 @@ public class DataFromIndexer {
         plaintextlist=new ArrayList<String>();
         urlsFromCrawler = new ArrayList<String>();
         urlsFromIndexer = new ArrayList<String>();
+        documentsPhraseSearch = new ArrayList<String>();
 
     }
     public void SetDataFromIndexer(List<String>  documentsNametemp,List<String> documentsBodyemp,
@@ -53,5 +55,9 @@ public class DataFromIndexer {
 
     public static void AddFromCrawler(String url) {
         urlsFromCrawler.add(url);
+    }
+
+    public static void AddFromPhraseSearch(String htmlDoc) {
+        documentsPhraseSearch.add(htmlDoc);
     }
 }
