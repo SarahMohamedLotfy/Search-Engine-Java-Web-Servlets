@@ -83,6 +83,7 @@ public class main {
 		System.out.println(data.urlsFromIndexer);
 		//ranker output
 		System.out.println(ranker.rank(data, data.urlsFromIndexer));
+		System.out.println(ranker.rankIndices(data, data.urlsFromIndexer));
 
 
 		////////////// Phrase Search ///////////////////

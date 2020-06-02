@@ -75,25 +75,60 @@ public class Ranker
         Hashtable<String, Double> rankedList = new Hashtable<String, Double>();
         for (int i = 0; i < numofdocs; i++)
         {
-            Double relevenceScore = tf_idf(i, data.occurencesOfWordsCount, data.documentsBody);
-            if (wantLocationScore && wantDateScore)
-            {
-                relevenceScore += FindCountryCode(Urls.get(i)) + FindsiteDate(Urls.get(i)) ;
-                relevenceScore /= Double.valueOf(3);
-            }
-            else if (wantLocationScore || wantDateScore)
-            {
-                if (wantLocationScore)
-                    relevenceScore += FindCountryCode(Urls.get(i));
-                else
-                    relevenceScore += FindsiteDate(Urls.get(i)) ;
-                relevenceScore /= Double.valueOf(2);
-            }
+        	Double relevenceScore = tf_idf(i, data.occurencesOfWordsCount, data.documentsBody);
+        	if (wantLocationScore && wantDateScore)
+			{
+				relevenceScore += FindCountryCode(Urls.get(i)) + FindsiteDate(Urls.get(i)) ;
+				relevenceScore /= Double.valueOf(3);
+			}
+        	else if (wantLocationScore || wantDateScore) 
+        	{
+				if (wantLocationScore)
+					relevenceScore += FindCountryCode(Urls.get(i));
+				else
+					relevenceScore += FindsiteDate(Urls.get(i)) ;
+				relevenceScore /= Double.valueOf(2);
+			}
             rankedList.put(Urls.get(i), relevenceScore);
             sortValue(rankedList);
 
         }
+        
         Set<String> output = rankedList.keySet();
+        return output;
+    }
+    public List<Integer> rankIndices(DataFromIndexer data,List<String> Urls) throws IOException
+    {
+    	Hashtable<String, Double> rankedList = new Hashtable<String, Double>();
+        for (int i = 0; i < numofdocs; i++)
+        {
+        	Double relevenceScore = tf_idf(i, data.occurencesOfWordsCount, data.documentsBody);
+        	if (wantLocationScore && wantDateScore)
+			{
+				relevenceScore += FindCountryCode(Urls.get(i)) + FindsiteDate(Urls.get(i)) ;
+				relevenceScore /= Double.valueOf(3);
+			}
+        	else if (wantLocationScore || wantDateScore) 
+        	{
+				if (wantLocationScore)
+					relevenceScore += FindCountryCode(Urls.get(i));
+				else
+					relevenceScore += FindsiteDate(Urls.get(i)) ;
+				relevenceScore /= Double.valueOf(2);
+			}
+            rankedList.put(Urls.get(i), relevenceScore);
+            sortValue(rankedList);
+
+        }
+        
+        Set<String> KeySet = rankedList.keySet();
+        List<String> KeyList = new ArrayList<String>(KeySet);
+        List<Integer> output = new ArrayList<Integer>();
+        for (String Key : KeyList)
+        {
+        	Integer DocIndex = data.urlsFromIndexer.indexOf(Key);
+        	output.add(DocIndex);
+        }
         return output;
     }
     public Double FindCountryCode(String Url) throws IOException
@@ -110,16 +145,16 @@ public class Ranker
     }
     public Double FindsiteDate(String URL)
     {
-        double defaultValue = .5;
-        try
-        {
-            Double output = DownloadPage.dateRelevence(URL);
-            return output;
-        } catch (Exception e)
-        {
-            System.out.println("failed to get date ... returning default value");
-            return defaultValue;
-        }
+    	double defaultValue = .5;
+    	try
+		{
+			Double output = DownloadPage.dateRelevence(URL);
+			return output;
+		} catch (Exception e)
+		{
+			System.out.println("failed to get date ... returning default value");
+			return defaultValue;
+		}
     }
     public void countrycodesinit()
     {
