@@ -1,6 +1,7 @@
 package main;
 
 
+import imageSearch.ImageSearch;
 import indexer.Extractor;
 import indexer.LuceneTester;
 import org.apache.lucene.queryParser.ParseException;
@@ -12,9 +13,8 @@ import ranker.Ranker;
 import webCrawler.WebCrawler;
 import Data.Data;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -129,6 +129,7 @@ public class main {
             }
             myWriter4.close();
 
+
             FileWriter myWriter5 = new FileWriter("data\\documentsheader.txt");
             for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
                 if (dataa.headerslist.get(i)==null) {
@@ -136,10 +137,14 @@ public class main {
                 }
             }
             myWriter5.close();
-
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        }
+           //Image search
+        for(String str: dataa.urlsFromIndexer) {
+            ImageSearch im = new ImageSearch();
+            im.extractImage(str);
         }
 
         ////////////// Phrase Search ///////////////////
@@ -156,5 +161,25 @@ public class main {
         }
         ////////////// Phrase Search ///////////////////
 
+    }
+
+    public static void saveImage(String imageUrl) throws IOException {
+        URL url = new URL(imageUrl);
+        String fileName = url.getFile();
+        String destName = "./figures" + fileName.substring(fileName.lastIndexOf("/"));
+        System.out.println(destName);
+
+        InputStream is = url.openStream();
+        OutputStream os = new FileOutputStream(destName);
+
+        byte[] b = new byte[2048];
+        int length;
+
+        while ((length = is.read(b)) != -1) {
+            os.write(b, 0, length);
+        }
+
+        is.close();
+        os.close();
     }
 }

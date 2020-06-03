@@ -32,7 +32,7 @@ import java.util.Vector;
 
 public class LuceneTester {
 
-    String indexDir = "D:\\Index";
+    String indexDir =System.getProperty("user.dir")+"//Index";
     String dataDir = System.getProperty("user.dir");
     Indexer indexer;
     Searcher searcher;
@@ -164,6 +164,7 @@ public class LuceneTester {
                                 images.add( el.attr("src") );
                               //  System.out.println("image tag: " + el.attr("src") + " Alt: " + el.attr("alt"));
                             }
+
                             //Title
                             String title = "";
                             title = htmllDoc.title();
