@@ -149,7 +149,7 @@ public class main {
             }
         for(String str: rankedurls) {
             ImageSearch im = new ImageSearch();
-            im.extractImage(str);
+            im.extractImage(str, search_sentence);
         }
 
         ////////////// Phrase Search ///////////////////

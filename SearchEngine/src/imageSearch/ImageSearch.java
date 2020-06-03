@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ImageSearch {
-    public static void extractImage(String webSiteURL) {
+    public static void extractImage(String webSiteURL, String searchedSentence) {
         try {
             //Connect to the website and get the html
             Document doc = Jsoup.connect(webSiteURL).get();
@@ -31,7 +31,7 @@ public class ImageSearch {
                     break;
                 }
                 else {
-                    getImages(src);
+                    getImages(src,searchedSentence);
                 }
             }
         } catch (IOException ex) {
@@ -40,7 +40,7 @@ public class ImageSearch {
         }
     }
 
-    private static void getImages(String src) throws IOException {
+    private static void getImages(String src, String searchedSentence) throws IOException {
 
         String folder = null;
         String folderPath = System.getProperty("user.dir") + "\\images";
@@ -54,17 +54,28 @@ public class ImageSearch {
 
         System.out.println(name);
 
-        //Open a URL Stream
-        URL url = new URL(src);
-        InputStream in = url.openStream();
-
-        OutputStream out = new BufferedOutputStream(new FileOutputStream( folderPath+ name));
-
-        for (int b; (b = in.read()) != -1;) {
-            out.write(b);
+        int found =0;
+        String[] searchedWords = searchedSentence.split(" ");
+        for(String word : searchedWords)
+        {
+            if (name.contains(word))
+            {
+                found =1;
+                break;
+            }
         }
-        out.close();
-        in.close();
+        if (found ==1) {
+            //Open a URL Stream
+            URL url = new URL(src);
+            InputStream in = url.openStream();
 
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(folderPath + name));
+
+            for (int b; (b = in.read()) != -1; ) {
+                out.write(b);
+            }
+            out.close();
+            in.close();
+        }
     }
 }
