@@ -142,7 +142,12 @@ public class main {
             e.printStackTrace();
         }
            //Image search
-        for(String str: dataa.urlsFromIndexer) {
+        //Ranked urls
+        List<String> rankedurls=new ArrayList<String> ();
+        for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
+            rankedurls.add(dataa.urlsFromIndexer.get(i));
+            }
+        for(String str: rankedurls) {
             ImageSearch im = new ImageSearch();
             im.extractImage(str);
         }
