@@ -1,0 +1,2 @@
+rootProject.name='APT- Voice recogniton'
+include ':app'
