@@ -120,9 +120,9 @@ public class main {
             }
             myWriter3.close();
 
-            FileWriter myWriter4 = new FileWriter("data\\documentsbody.txt");
+            FileWriter myWriter4 = new FileWriter("data\\documentsplaintext.txt");
             for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
-                myWriter4.write(dataa.plaintextlist.get(i) + " * ");
+                myWriter4.write(dataa.plaintextlist.get(i).substring(0,400) +  System.lineSeparator());
             }
             myWriter4.close();
 
