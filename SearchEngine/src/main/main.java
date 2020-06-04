@@ -122,7 +122,7 @@ public class main {
 
             FileWriter myWriter4 = new FileWriter("data\\documentsplaintext.txt");
             for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
-                myWriter4.write(dataa.plaintextlist.get(i).substring(0,400) +  System.lineSeparator());
+                myWriter4.write(dataa.plaintextlist.get(i) +  System.lineSeparator());
             }
             myWriter4.close();
 

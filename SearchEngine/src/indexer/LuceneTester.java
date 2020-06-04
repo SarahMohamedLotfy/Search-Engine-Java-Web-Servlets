@@ -168,20 +168,33 @@ public class LuceneTester {
                             //Title
                             String title = "";
                             title = htmllDoc.title();
-                            //Headers
+                            //paragraphs
                             Element body = htmllDoc.body();
-                            Elements paragraphs = body.getElementsByTag("header");
+                            //header
+                            Elements headers = body.getElementsByTag("header");
                             String header ="";
-                            for (Element paragraph : paragraphs) {
+                            for (Element paragraph : headers) {
                                 header = header+paragraph.text();
                             }
+
                             // Plain text
+                            String tempWord = header;
                             String allBody = htmllDoc.body().text();
-                            String titleheader = title +" "+ header + " ";
-                            String plaintext = allBody.replaceAll(titleheader, "");
+                            String plainText =  allBody.replaceAll(tempWord, "");
+                            int indexFound=-1;
+                            for (String searchWord: searchedWords)
+                            {
+                                indexFound = plainText.indexOf(searchWord);
+                                if (indexFound >-1 )
+                                {
+                                    break;
+                                }
+                            }
+
+
                             titleslist.add(title);
                             headerslist.add(header);
-                            plaintextlist.add(plaintext);
+                            plaintextlist.add(plainText.substring(indexFound,indexFound+400) +"....");
                         }
                     }
                     break;
