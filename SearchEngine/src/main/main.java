@@ -27,24 +27,25 @@ public class main {
     public static String location = "Egypt";
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
-        // Crawler //
+
         int numberOFurls = 5;
         int numberOfThreads = 3;
         String htmlPath = System.getProperty("user.dir") + "\\html";
         String filenamePath = System.getProperty("user.dir");
-		String search_sentence ="Douglas featured collabor red important";
+		String searchSentence ="Douglas featured collabor red important";
        // String search_sentence = "\"wikipedia free\" encyclopedia";
         // remove quotes from the sentence
-        StringBuilder sb = new StringBuilder(search_sentence);
+        StringBuilder sb = new StringBuilder(searchSentence);
         String resultString = sb.toString();
         while (resultString.contains("\"")) {
             sb.deleteCharAt(resultString.indexOf("\""));
             resultString = sb.toString();
         }
-        String search_phrase = search_sentence;
-        search_sentence = resultString;
+        String search_phrase = searchSentence;
+        searchSentence = resultString;
 
 
+        //Crawler
         Thread crawlerThreads[] = new Thread[numberOfThreads];
         for (int i = 0; i < numberOfThreads; ++i) {
             crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/", numberOFurls));
@@ -55,12 +56,8 @@ public class main {
         //Extractor ///
         Data dataa = new Data();
         Extractor extract = new Extractor();
-        extract.extract_from_html(htmlPath, numberOFurls);
+        extract.extractFromHtml(htmlPath, numberOFurls);
 
-        // Get words in html document
-        //String document = "NameGenderForm.html" ;
-        //GetWords getWords = new GetWords(document);
-        //getWords.get( htmlPath);
 
         //Indexer
         LuceneTester tester;
@@ -68,7 +65,7 @@ public class main {
             long startTimeIndexer = System.currentTimeMillis();
             tester = new LuceneTester();
             tester.createIndex();
-            tester.search(search_sentence, dataa, htmlPath, dataa.urlsFromCrawler);
+            tester.search(searchSentence, dataa, htmlPath, dataa.urlsFromCrawler);
             tester.delete(htmlPath);
             long endTimeIndexer = System.currentTimeMillis();
             System.out.println("Indexer, time taken: " + (endTimeIndexer - startTimeIndexer) + " ms");
@@ -78,7 +75,7 @@ public class main {
         //Ranker
         Boolean wantLocationScore = false;
         Boolean wantDateScore = false;
-        Ranker ranker = new Ranker(dataa, search_sentence, location, wantLocationScore, wantDateScore);
+        Ranker ranker = new Ranker(dataa, searchSentence, location, wantLocationScore, wantDateScore);
 
 
         System.out.println("**********************");
@@ -141,7 +138,9 @@ public class main {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-           //Image search
+
+
+        //Image search
         //Ranked urls
         List<String> rankedurls=new ArrayList<String> ();
         for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
@@ -149,7 +148,7 @@ public class main {
             }
         for(String str: rankedurls) {
             ImageSearch im = new ImageSearch();
-            im.extractImage(str, search_sentence);
+            im.extractImage(str, searchSentence);
         }
 
         ////////////// Phrase Search ///////////////////
@@ -166,25 +165,5 @@ public class main {
         }
         ////////////// Phrase Search ///////////////////
 
-    }
-
-    public static void saveImage(String imageUrl) throws IOException {
-        URL url = new URL(imageUrl);
-        String fileName = url.getFile();
-        String destName = "./figures" + fileName.substring(fileName.lastIndexOf("/"));
-        System.out.println(destName);
-
-        InputStream is = url.openStream();
-        OutputStream os = new FileOutputStream(destName);
-
-        byte[] b = new byte[2048];
-        int length;
-
-        while ((length = is.read(b)) != -1) {
-            os.write(b, 0, length);
-        }
-
-        is.close();
-        os.close();
     }
 }

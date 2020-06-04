@@ -75,7 +75,7 @@ public class LuceneTester {
             int i=Integer.parseInt(filename);
             int count = 1;
 
-            String[] searched_words = search_word.split(" ");
+            String[] searchedWords = search_word.split(" ");
 
 
             // Get the file include each word in searched words
@@ -113,7 +113,7 @@ public class LuceneTester {
                         }
                         commaPosition ++;
                     }
-                    for ( String word : searched_words) {
+                    for ( String word : searchedWords) {
 
                         // Get number of occurence in each document
                         int countWord = 0;

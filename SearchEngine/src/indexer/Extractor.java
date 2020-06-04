@@ -33,7 +33,7 @@ import java.util.Map;
 public class Extractor {
 
 
-    public void extract_from_html(String htmlPath, int numberOfUrls) throws IOException, SQLException, InterruptedException {
+    public void extractFromHtml(String htmlPath, int numberOfUrls) throws IOException, SQLException, InterruptedException {
 
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Path pathh = Paths.get(htmlPath);
@@ -41,8 +41,7 @@ public class Extractor {
 
         boolean poll = true;
         int i=1;
-        String date="";
-        int countfiles=0;
+        int countFiles=0;
         while (poll) {
             WatchKey key = watchService.take();
             String lastfilepath ="";
@@ -51,7 +50,7 @@ public class Extractor {
                 System.out.println("Event kind : " + event.kind() + " - File : " + event.context());
                 String filePath = pathh + "\\" + event.context();
                 if (event.kind() ==ENTRY_MODIFY && !filePath.equals(lastfilepath)) {
-                    countfiles++;
+                    countFiles++;
                     System.out.println("file path   " + filePath+"    "+file.toFile().lastModified());
                     String multihtml = new String(Files.readAllBytes(Paths.get(filePath)));
                     String[] htmlParts = multihtml.split("(?<=</html>)");
@@ -75,7 +74,6 @@ public class Extractor {
                         String header = "";
                         for (Element paragraph : paragraphs) {
                             header = header + paragraph.text();
-                            //System.out.println(paragraph.text());
                         }
 
                         //Remove stop words
@@ -121,12 +119,12 @@ public class Extractor {
                         }
                     }
                 }
-            if (countfiles==numberOfUrls)
+            if (countFiles==numberOfUrls)
             {
                 break;
             }
             }
-            if (countfiles==numberOfUrls)
+            if (countFiles==numberOfUrls)
             {
                 break;
             }
