@@ -202,11 +202,6 @@ public class main {
         if (phraseSearchTest){
             phraseSearch.countPhrase();
             System.out.println(phraseSearch.wordsToBeSearch);
-            for (int i = 0; i < phraseSearch.foundWords.length; ++i)
-                System.out.println(" index " + i + " = " + phraseSearch.foundWords[i]);
-        }
-        else {
-            System.out.println("no phrase search");
         }
         ////////////// Phrase Search ///////////////////
 
