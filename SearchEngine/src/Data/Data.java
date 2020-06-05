@@ -19,6 +19,8 @@ public class Data {
     public static List<String> urlsFromCrawler;
     public static List<String>urlsFromIndexer;
     public static List<String> documentsPhraseSearch;
+    public static List<String> similarWords;
+    public static List<String> originalWord;
 
     public  Data() {
         documentsName =new ArrayList<String>();
@@ -34,6 +36,8 @@ public class Data {
         urlsFromCrawler = new ArrayList<String>();
         urlsFromIndexer = new ArrayList<String>();
         documentsPhraseSearch = new ArrayList<String>();
+        similarWords = new ArrayList<String>();
+        originalWord = new ArrayList<String>();
 
     }
     public void SetDataFromIndexer(List<String>  documentsNametemp,List<String> documentsBodyemp,

@@ -30,11 +30,12 @@ public class main {
     public static String word = "";
     public static boolean wantToFindWord = false;
     public static String location = "Egypt";
+    public static String linksToCrawl[] = {"https://stackoverflow.com/", "https://en.wikipedia.org/", "https://www.w3schools.com/", "https://www.geeksforgeeks.org/"};
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
 
         int numberOFurls = 5;
-        int numberOfThreads = 3;
+        int numberOfThreads = linksToCrawl.length;
         String htmlPath = System.getProperty("user.dir") + "\\html";
         String filenamePath = System.getProperty("user.dir");
 		String searchSentence ="Douglas featured collabor red important";
@@ -53,7 +54,7 @@ public class main {
         //Crawler
         Thread crawlerThreads[] = new Thread[numberOfThreads];
         for (int i = 0; i < numberOfThreads; ++i) {
-            crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/", numberOFurls));
+            crawlerThreads[i] = new Thread(new WebCrawler(linksToCrawl[i], numberOFurls));
             crawlerThreads[i].start();
         }
 
@@ -198,15 +199,21 @@ public class main {
         System.out.println("**********************");
         PhraseSearch phraseSearch = new PhraseSearch(search_phrase, dataa.occurencesOfWordsCount, dataa.documentsName);
         boolean phraseSearchTest = phraseSearch.checkPhraseSearch();
-        if (phraseSearchTest) {
+        if (phraseSearchTest){
             phraseSearch.countPhrase();
             System.out.println(phraseSearch.wordsToBeSearch);
             for (int i = 0; i < phraseSearch.foundWords.length; ++i)
                 System.out.println(" index " + i + " = " + phraseSearch.foundWords[i]);
-        } else {
+        }
+        else {
             System.out.println("no phrase search");
         }
         ////////////// Phrase Search ///////////////////
+
+        ////////////// query processor //////////////////
+        QueryProcessor.QueryProcessor queryProcessor = new QueryProcessor.QueryProcessor(searchSentence, dataa.documentsName);
+        queryProcessor.extractSimilarWords();
+        //////////// query processor ///////////////////////
 
     }
 
