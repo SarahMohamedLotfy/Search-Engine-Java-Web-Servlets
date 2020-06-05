@@ -1,6 +1,9 @@
 package main;
 
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import imageSearch.ImageSearch;
 import indexer.Extractor;
 import indexer.LuceneTester;
@@ -17,6 +20,8 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +145,44 @@ public class main {
         }
 
 
+        //Write to DataBase
+        for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
+            String sql = "INSERT INTO documentsUrl(url) VALUES(?)";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, dataa.urlsFromIndexer.get(i));
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        List<String> documentstitles=new ArrayList<String> ();
+        for(int i=0;i< dataa.titlelist.size();i=i+5) {
+            documentstitles.add(dataa.titlelist.get(i));
+        }
+        for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
+            String sql = "INSERT INTO documentsTitle(title) VALUES(?)";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, documentstitles.get(i));
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
+            String sql = "INSERT INTO documentsParagraphs(paragraph) VALUES(?)";
+            try (Connection conn = connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, dataa.plaintextlist.get(i));
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+
         //Image search
         //Ranked urls
         List<String> rankedurls=new ArrayList<String> ();
@@ -165,5 +208,17 @@ public class main {
         }
         ////////////// Phrase Search ///////////////////
 
+    }
+
+    public static Connection connect() {
+        // SQLite connection string
+        String url = "jdbc:sqlite:C:\\Users\\hi\\Documents\\GitHub\\APT-Search-Engine\\SearchEngine\\DataBase.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
     }
 }

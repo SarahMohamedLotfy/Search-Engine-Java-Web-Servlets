@@ -13,7 +13,9 @@ import java.util.Scanner;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
+import java.sql.*;
 import Stemmer.Stemmer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.queryParser.ParseException;
