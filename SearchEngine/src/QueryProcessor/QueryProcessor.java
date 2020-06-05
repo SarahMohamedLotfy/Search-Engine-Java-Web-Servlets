@@ -27,10 +27,13 @@ public class QueryProcessor {
     ////// functions
 
     public void extractSimilarWords(){
+        // remove stop words from the search sentence
+        searchSentence = Stopwords.removeStemmedStopWords(searchSentence);
         String[] arr = searchSentence.split(" ");
 
         for ( String ss : arr) {
             Data.originalWord.add(ss);
+            Data.similarWords.add(ss);
             for (int i = 0; i < documentsName.size(); ++i){
                 try {
                     String path = "E:\\Study\\2nd Semester\\APT\\Eclipse\\search_engine\\html2\\";
@@ -64,7 +67,7 @@ public class QueryProcessor {
         {
 
             String result = "";
-            char quotations[] = {' ', ',', ';', '.', '\'', '\"', '/', '-', '_', ':', '<', '>', '[', ']', '=', '+', ')', '(', '*', '&', '^', '%', '$', '#', '@', '!', '?'};
+            char quotations[] = {' ', ',', ';', '.', '\'', '\"', '/', '-', '_', ':', '<', '>', '[', ']', '=', '+', ')', '(', '*', '&', '^', '%', '$', '#', '@', '!', '?', '—'};
             String letters = "abcdefghijklmnopqrstuvwxyz";
             int iStart = matcher.start();
             while(true){
