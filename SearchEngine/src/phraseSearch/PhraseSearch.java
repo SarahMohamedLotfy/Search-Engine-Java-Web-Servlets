@@ -16,6 +16,7 @@ public class PhraseSearch {
 	public List<Integer> occurencesOfWordsCount;
 	public List<String>  documentsName;
 	public static int[] foundWords;
+	final String PATH = "E:\\Study\\2nd Semester\\APT\\Eclipse\\search_engine\\html2\\";
 
 	public PhraseSearch(String searchSentence, List<Integer> occurencesOfWordsCount, List<String>  documentsName) {
 		this.searchSentence = searchSentence;
@@ -66,15 +67,10 @@ public class PhraseSearch {
 	public void countPhrase(){
 		// this variable is for knowing this phrase is in each index in the DataFromIndex.occurencesOfWordsCount
 		int indexOfPhraseWordInGeneralSearch = 0;
-		int countOfPhraseWords = wordsToBeSearch.size();
-		// knowing which index from comparing the first word in wordsToBeSearch with its index in searchSentence
 		String[] arr = searchSentence.split(" ");
 
-		int searchSentenceWordsCount = arr.length;
 		for ( String ss : arr) {
-//			  wordsToBeSearch.add(ss);
 			if(ss.equals("\"" + 	wordsToBeSearch.get(0))){
-//			  	System.out.println(indexOfPhraseWordInGeneralSearch);
 				break;
 			}
 			indexOfPhraseWordInGeneralSearch ++;
@@ -84,51 +80,28 @@ public class PhraseSearch {
 
 		// we will loop on the first word only of the phrase
 		// because if the first word doesn't exist, this means that there is no this phrase in the link
-//		  for (int i = indexOfPhraseWordInGeneralSearch * documentsName.size(); i < wordsToBeSearch.size() + indexOfPhraseWordInGeneralSearch; ++i){
 		for (int i = indexOfPhraseWordInGeneralSearch; i < documentsName.size(); ++i){
 			// search for occurrence
-			boolean ifAllWordsExist = true;
-			// loop on the links, in the list of occurencesOfWordsCount
-//			  for (int j = 0; j < wordsToBeSearch.size(); j++){
-//			  	if (occurencesOfWordsCount.get(j + i) == 0){
-//			  		ifAllWordsExist = false;
-//			  		foundWords[j] = 0;
-//			  		break;
-//				}
-//			  }
-//
-//			  if (!ifAllWordsExist)
-//			  	continue;
-
-			// loop on the links which have the phrase
-			// and get the count of occurrence of the whole phrase the link
-//			  for (int j = 0; j < wordsToBeSearch.size(); ++j){
 			try {
 				countOccurrence = 0;
-				String path = "E:\\Study\\2nd Semester\\APT\\Eclipse\\search_engine\\html2\\";
-				File myObj = new File(path + documentsName.get(i));
+				File myObj = new File(PATH + documentsName.get(i));
 				Scanner myReader = new Scanner(myObj);
-//				  System.out.println("read a file");
 				while (myReader.hasNextLine()) {
 					String line = myReader.nextLine();
-//					  System.out.println(line);
 
 					boolean isFound = (line.toLowerCase()).contains(searchPhrase.toLowerCase());
 					if (isFound) {
 						countOccurrence++;
 					}
 
-//					  countOccurrence = countOccurences(line, searchPhrase);
 					countOccurrence = countPhrase(line, searchPhrase);
 				}
 				foundWords[i] = countOccurrence;
-//				  System.out.println(searchPhrase + " " + documentsName.get(i) + i + " " + countOccurrence + " line length " + lines);
 				myReader.close();
 			} catch (FileNotFoundException e) {
 				System.out.println("An error occurred.");
 				e.printStackTrace();
 			}
-//			  }
 		}
 
 		computeMostRelevantPhraseLinks();

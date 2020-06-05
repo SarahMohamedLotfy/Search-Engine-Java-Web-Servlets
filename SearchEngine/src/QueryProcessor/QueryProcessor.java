@@ -18,6 +18,8 @@ public class QueryProcessor {
     public static String searchSentence;
     public List<String> documentsName;
 
+    final String PATH = "E:\\Study\\2nd Semester\\APT\\Eclipse\\search_engine\\html2\\";
+
     public QueryProcessor(String searchSentence, List<String> documentsName){
         this.searchSentence = searchSentence;
         this.documentsName =new ArrayList<String>();
@@ -36,8 +38,7 @@ public class QueryProcessor {
             Data.similarWords.add(ss);
             for (int i = 0; i < documentsName.size(); ++i){
                 try {
-                    String path = "E:\\Study\\2nd Semester\\APT\\Eclipse\\search_engine\\html2\\";
-                    File myObj = new File(path + documentsName.get(i));
+                    File myObj = new File(PATH + documentsName.get(i));
                     Scanner myReader = new Scanner(myObj);
                     while (myReader.hasNextLine()) {
                         String line = myReader.nextLine();
