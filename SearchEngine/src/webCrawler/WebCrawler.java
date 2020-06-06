@@ -208,7 +208,7 @@ public class WebCrawler implements Runnable {
     	Thread crawlerThreads[] = new Thread[numberOfThreads];
     	
     	for (int i = 0; i < numberOfThreads; ++i) {
-    		crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/wiki/FIFA_World_Cup/",numberOfurls));
+    		crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/",numberOfurls));
     		crawlerThreads[i].start();
     	}
     }

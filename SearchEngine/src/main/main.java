@@ -35,11 +35,10 @@ public class main {
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
 
         int numberOFurls = 5;
-        int numberOfThreads = linksToCrawl.length;
+        int numberOfThreads = 3;
         String htmlPath = System.getProperty("user.dir") + "\\html";
         String filenamePath = System.getProperty("user.dir");
-		String searchSentence ="Douglas featured collabor red important";
-       // String search_sentence = "\"wikipedia free\" encyclopedia";
+        String searchSentence ="Douglas featured collabor red important";
         // remove quotes from the sentence
         StringBuilder sb = new StringBuilder(searchSentence);
         String resultString = sb.toString();
@@ -54,7 +53,7 @@ public class main {
         //Crawler
         Thread crawlerThreads[] = new Thread[numberOfThreads];
         for (int i = 0; i < numberOfThreads; ++i) {
-            crawlerThreads[i] = new Thread(new WebCrawler(linksToCrawl[i], numberOFurls));
+            crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/", numberOFurls));
             crawlerThreads[i].start();
         }
 
@@ -189,7 +188,7 @@ public class main {
         List<String> rankedurls=new ArrayList<String> ();
         for(int i: ranker.rankIndices(dataa, dataa.urlsFromIndexer)) {
             rankedurls.add(dataa.urlsFromIndexer.get(i));
-            }
+        }
         for(String str: rankedurls) {
             ImageSearch im = new ImageSearch();
             im.extractImage(str, searchSentence);
@@ -199,22 +198,21 @@ public class main {
         System.out.println("**********************");
         PhraseSearch phraseSearch = new PhraseSearch(search_phrase, dataa.occurencesOfWordsCount, dataa.documentsName);
         boolean phraseSearchTest = phraseSearch.checkPhraseSearch();
-        if (phraseSearchTest){
+        if (phraseSearchTest) {
             phraseSearch.countPhrase();
             System.out.println(phraseSearch.wordsToBeSearch);
+            for (int i = 0; i < phraseSearch.foundWords.length; ++i)
+                System.out.println(" index " + i + " = " + phraseSearch.foundWords[i]);
+        } else {
+            System.out.println("no phrase search");
         }
         ////////////// Phrase Search ///////////////////
-
-        ////////////// query processor //////////////////
-        QueryProcessor.QueryProcessor queryProcessor = new QueryProcessor.QueryProcessor(searchSentence, dataa.documentsName);
-        queryProcessor.extractSimilarWords();
-        //////////// query processor ///////////////////////
 
     }
 
     public static Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:"+System.getProperty("user.dir")+ "\\DataBase.db";
+        String url = "jdbc:sqlite:"+System.getProperty("user.dir") +"\\DataBase.db";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -224,3 +222,6 @@ public class main {
         return conn;
     }
 }
+
+
+
