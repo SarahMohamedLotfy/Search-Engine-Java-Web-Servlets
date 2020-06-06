@@ -222,11 +222,15 @@ public class LuceneTester {
 
 
 
-    public void delete(String htmlPath) throws IOException
+    public void delete(String htmlPath, String imagePath) throws IOException
     {
         File folder = new File(htmlPath);
         for (File f : folder.listFiles()) {
                 f.delete();
+        }
+        File folder2 = new File(imagePath);
+        for (File f : folder2.listFiles()) {
+            f.delete();
         }
     }
 }

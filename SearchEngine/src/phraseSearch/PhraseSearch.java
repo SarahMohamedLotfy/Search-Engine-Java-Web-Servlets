@@ -80,7 +80,6 @@ public class PhraseSearch {
 		for (int i = 0; i < wordsToBeSearch.size(); ++i) {
 			// search for occurrence
 
-
 			try {
 				countOccurrence = 0;
 				File myObj = new File(PATH + documentsName.get(i));
