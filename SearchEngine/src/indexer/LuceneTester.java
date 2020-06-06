@@ -94,6 +94,7 @@ public class LuceneTester {
 
                     System.out.println("File name: " + child.getName());
                     documentsName.add(child.getName());
+                    System.out.println("naaaaaaaaaaaame  "+child.getName());
 
                     File file = new File(doc.get(LuceneConstants.FILE_PATH));
                     BufferedReader br = new BufferedReader(new FileReader(file));
