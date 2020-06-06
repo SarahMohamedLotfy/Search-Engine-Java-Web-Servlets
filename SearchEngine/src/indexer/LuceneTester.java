@@ -226,9 +226,7 @@ public class LuceneTester {
     {
         File folder = new File(htmlPath);
         for (File f : folder.listFiles()) {
-            if (f.getName().endsWith(".html")) {
                 f.delete();
-            }
         }
     }
 }
