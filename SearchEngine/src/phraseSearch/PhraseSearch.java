@@ -26,6 +26,8 @@ public class PhraseSearch {
 		this.documentsName =new ArrayList<String>();
 		this.documentsName = documentsName;
 		this.foundWords = new int[documentsName.size()];
+		for (int i = 0; i < documentsName.size(); ++i)
+			Data.countPhraseSearch.add(0);
 	}
 
 	public boolean checkPhraseSearch() {
@@ -89,8 +91,7 @@ public class PhraseSearch {
 
 					countOccurrence = countPhrase(line, searchPhrase);
 				}
-				foundWords[i] = countOccurrence;
-				Data.countPhraseSearch.add(countOccurrence);
+				Data.countPhraseSearch.set(i, countOccurrence);
 				myReader.close();
 			} catch (FileNotFoundException e) {
 				System.out.println("An error occurred.");
