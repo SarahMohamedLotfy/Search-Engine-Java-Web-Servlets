@@ -37,10 +37,16 @@ public class main {
 
         // Delete html file
         String htmlPath = System.getProperty("user.dir") + "\\html";
+        String imagePath = System.getProperty("user.dir") + "\\images";
+
         LuceneTester tester2= new LuceneTester();
         tester2.delete(htmlPath);
 
-        int numberOFurls = 5;
+        //Delete image folder
+        LuceneTester tester3= new LuceneTester();
+        tester3.delete(imagePath);
+
+        int numberOFurls = 100;
         int numberOfThreads = 3;
 
         String filenamePath = System.getProperty("user.dir");
