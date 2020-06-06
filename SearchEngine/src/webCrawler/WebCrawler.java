@@ -1,16 +1,13 @@
 package webCrawler;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+
+import indexer.LuceneTester;
 import main.main;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +15,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import Data.Data;
-
+import indexer.LuceneTester;
 public class WebCrawler implements Runnable {
 	
 	public static int count = 0;
@@ -273,11 +270,5 @@ public class WebCrawler implements Runnable {
   	      e.printStackTrace();
   	    }
     }
-    
-//    public void searchPhrase(String phrase) {
-//    	main.wantToFindWord = true;
-//    	main.word = phrase;
-//    }
-
 }
 

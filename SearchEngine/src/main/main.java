@@ -34,9 +34,15 @@ public class main {
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
 
+
+        // Delete html file
+        String htmlPath = System.getProperty("user.dir") + "\\html";
+        LuceneTester tester2= new LuceneTester();
+        tester2.delete(htmlPath);
+
         int numberOFurls = 5;
         int numberOfThreads = 3;
-        String htmlPath = System.getProperty("user.dir") + "\\html";
+
         String filenamePath = System.getProperty("user.dir");
         String searchSentence ="Douglas featured collabor red important";
         // remove quotes from the sentence
@@ -53,7 +59,7 @@ public class main {
         //Crawler
         Thread crawlerThreads[] = new Thread[numberOfThreads];
         for (int i = 0; i < numberOfThreads; ++i) {
-            crawlerThreads[i] = new Thread(new WebCrawler("https://en.wikipedia.org/", numberOFurls));
+            crawlerThreads[i] = new Thread(new WebCrawler(linksToCrawl[1], numberOFurls));
             crawlerThreads[i].start();
         }
 
@@ -66,21 +72,22 @@ public class main {
 
         //Indexer
         LuceneTester tester;
+        tester = new LuceneTester();
         try {
             long startTimeIndexer = System.currentTimeMillis();
-            tester = new LuceneTester();
             tester.createIndex();
             tester.search(searchSentence, dataa, htmlPath, dataa.urlsFromCrawler);
-            tester.delete(htmlPath);
             long endTimeIndexer = System.currentTimeMillis();
             System.out.println("Indexer, time taken: " + (endTimeIndexer - startTimeIndexer) + " ms");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+        tester.delete(htmlPath);
         //Ranker
         Boolean wantLocationScore = false;
         Boolean wantDateScore = false;
         Ranker ranker = new Ranker(dataa, searchSentence, location, wantLocationScore, wantDateScore);
+
 
 
         System.out.println("**********************");
@@ -207,7 +214,6 @@ public class main {
             System.out.println("no phrase search");
         }
         ////////////// Phrase Search ///////////////////
-
     }
 
     public static Connection connect() {

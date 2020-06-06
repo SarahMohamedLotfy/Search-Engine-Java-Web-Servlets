@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="80cfc2ad-bca4-49ea-881b-e645c74a682a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/SearchEngine.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithms APT.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/common_lang3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/commons_io_2_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/jsoup_1_13_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lucene_core_3_6_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lucene_core_3_6_21.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lucene_snowball_3_0_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_30_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataBase.db" beforeDir="false" afterPath="$PROJECT_DIR$/DataBase.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.fdt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.fdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.fnm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.frq" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.nrm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.prx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.tii" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/_z.tis" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/segments.gen" beforeDir="false" afterPath="$PROJECT_DIR$/Index/segments.gen" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Index/segments_10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/URLs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/URLs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/documentsName.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/documentsheader.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/documentsplaintext.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/documentstitle.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/documentsurls.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/filename1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/filename1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/filename4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/filename4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html2/3_Wikipedia.html" beforeDir="false" afterPath="$PROJECT_DIR$/html2/3_Wikipedia.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html2/4_This article is semi-protected due to vandalism.html" beforeDir="false" afterPath="$PROJECT_DIR$/html2/4_This article is semi-protected due to vandalism.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SearchEngine/indexer/LuceneTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SearchEngine/indexer/LuceneTester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SearchEngine/main/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SearchEngine/main/main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/indexer/Extractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/indexer/Extractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/indexer/LuceneTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/indexer/LuceneTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/main.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1cmzyeZh73mIryhgkeFSvcWhBsE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/SearchEngine" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.main" />
+      <module name="SearchEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="80cfc2ad-bca4-49ea-881b-e645c74a682a" name="Default Changelist" comment="" />
+      <created>1591148813002</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1591148813002</updated>
+      <workItem from="1591148818727" duration="1140000" />
+      <workItem from="1591150044545" duration="1813000" />
+      <workItem from="1591151893892" duration="145000" />
+      <workItem from="1591200024217" duration="444000" />
+      <workItem from="1591200523730" duration="865000" />
+      <workItem from="1591203052890" duration="530000" />
+      <workItem from="1591203648136" duration="1895000" />
+      <workItem from="1591205675311" duration="1020000" />
+      <workItem from="1591227787891" duration="1780000" />
+      <workItem from="1591273004889" duration="1580000" />
+      <workItem from="1591274713792" duration="1776000" />
+      <workItem from="1591276549946" duration="525000" />
+      <workItem from="1591374122890" duration="1584000" />
+      <workItem from="1591375856784" duration="1608000" />
+      <workItem from="1591457661208" duration="273000" />
+      <workItem from="1591464127864" duration="334000" />
+      <workItem from="1591464616650" duration="447000" />
+      <workItem from="1591465105542" duration="456000" />
+      <workItem from="1591465600530" duration="1784000" />
+      <workItem from="1591467421319" duration="1358000" />
+      <workItem from="1591468813990" duration="1841000" />
+      <workItem from="1591470698895" duration="851000" />
+      <workItem from="1591475618594" duration="398000" />
+      <workItem from="1591476136450" duration="211000" />
+      <workItem from="1591476374520" duration="136000" />
+      <workItem from="1591476786012" duration="568000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="367" y="104" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1591475754476">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state x="367" y="104" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.724@0.0.1366.724" timestamp="1591475754476" />
+    <state x="417" y="114" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1591149827970">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state x="417" y="114" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.724@0.0.1366.724" timestamp="1591149827970" />
+    <state x="415" y="109" key="FileChooserDialogImpl" timestamp="1591477355542">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state x="415" y="109" key="FileChooserDialogImpl/0.0.1366.724@0.0.1366.724" timestamp="1591477355542" />
+    <state width="1366" height="225" key="GridCell.Tab.0.bottom" timestamp="1591477356617">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="225" key="GridCell.Tab.0.bottom/0.0.1366.724@0.0.1366.724" timestamp="1591477356617" />
+    <state width="1366" height="225" key="GridCell.Tab.0.center" timestamp="1591477356617">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="225" key="GridCell.Tab.0.center/0.0.1366.724@0.0.1366.724" timestamp="1591477356617" />
+    <state width="1366" height="225" key="GridCell.Tab.0.left" timestamp="1591477356617">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="225" key="GridCell.Tab.0.left/0.0.1366.724@0.0.1366.724" timestamp="1591477356617" />
+    <state width="1366" height="225" key="GridCell.Tab.0.right" timestamp="1591477356617">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="225" key="GridCell.Tab.0.right/0.0.1366.724@0.0.1366.724" timestamp="1591477356617" />
+    <state width="1366" height="226" key="GridCell.Tab.1.bottom" timestamp="1591377472111">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="226" key="GridCell.Tab.1.bottom/0.0.1366.724@0.0.1366.724" timestamp="1591377472111" />
+    <state width="1366" height="226" key="GridCell.Tab.1.center" timestamp="1591377472111">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="226" key="GridCell.Tab.1.center/0.0.1366.724@0.0.1366.724" timestamp="1591377472111" />
+    <state width="1366" height="226" key="GridCell.Tab.1.left" timestamp="1591377472111">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="226" key="GridCell.Tab.1.left/0.0.1366.724@0.0.1366.724" timestamp="1591377472111" />
+    <state width="1366" height="226" key="GridCell.Tab.1.right" timestamp="1591377472111">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state width="1366" height="226" key="GridCell.Tab.1.right/0.0.1366.724@0.0.1366.724" timestamp="1591377472111" />
+    <state x="167" y="0" key="SettingsEditor" timestamp="1591476426958">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state x="167" y="0" key="SettingsEditor/0.0.1366.724@0.0.1366.724" timestamp="1591476426958" />
+    <state x="112" y="0" key="new project wizard" timestamp="1591476350079">
+      <screen x="0" y="0" width="1366" height="724" />
+    </state>
+    <state x="112" y="0" key="new project wizard/0.0.1366.724@0.0.1366.724" timestamp="1591476350079" />
+  </component>
+</project>
