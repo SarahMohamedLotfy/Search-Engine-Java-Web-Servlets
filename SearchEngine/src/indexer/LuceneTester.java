@@ -202,7 +202,13 @@ public class LuceneTester {
 
                             titleslist.add(title);
                             headerslist.add(header);
-                            plaintextlist.add(plainText.substring(indexFound,indexFound+300) +"....");
+                            if (plainText.length()- indexFound < 300 ) {
+                                plaintextlist.add(plainText.substring(indexFound, plainText.length()) + "....");
+                            }
+                            else
+                            {
+                                plaintextlist.add(plainText.substring(indexFound, indexFound+300) + "....");
+                            }
                         }
                     }
                     break;
