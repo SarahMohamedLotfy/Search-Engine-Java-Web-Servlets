@@ -74,7 +74,9 @@ public class LuceneTester {
             // TO GET Name of HTML document
             File dir = new File(htmlPath);
             File[] directoryListing = dir.listFiles();
-            int i=Integer.parseInt(filename);
+            int i = 0;
+            if (filename.length() > 0)
+                i = Integer.parseInt(filename);
             int count = 1;
 
             String[] searchedWords = search_word.split(" ");
@@ -192,11 +194,14 @@ public class LuceneTester {
                                     break;
                                 }
                             }
-
+                            if (indexFound==-1)
+                            {
+                                indexFound=0;
+                            }
 
                             titleslist.add(title);
                             headerslist.add(header);
-                            plaintextlist.add(plainText.substring(indexFound,indexFound+400) +"....");
+                            plaintextlist.add(plainText.substring(indexFound,plainText.length()) +"....");
                         }
                     }
                     break;

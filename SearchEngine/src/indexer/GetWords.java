@@ -1,4 +1,4 @@
-package indexe;
+package indexer;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
