@@ -16,7 +16,7 @@ public class PhraseSearch {
 	public List<Integer> occurencesOfWordsCount;
 	public List<String>  documentsName;
 	public static int[] foundWords;
-	final String PATH = "E:\\Study\\2nd Semester\\APT\\Eclipse\\search_engine\\html2\\";
+	final String PATH = System.getProperty("user.dir") + "\\html2\\";
 
 	public PhraseSearch(String searchSentence, List<Integer> occurencesOfWordsCount, List<String>  documentsName) {
 		this.searchSentence = searchSentence;
@@ -38,11 +38,18 @@ public class PhraseSearch {
 
 			for (int i = 0; i < searchSentence.length(); ++i) {
 				if (searchSentence.charAt(i) == '"') {
+
 					count ++;
 					i++;
 				}
 				if (count == 1) {
 					searchWord += searchSentence.charAt(i);
+				}
+				if (count == 2 && i < searchSentence.length() - 1){
+					return false;
+				}
+				if (count == 2 && i == searchSentence.length() - 1){
+					return true;
 				}
 			}
 		}
@@ -59,29 +66,21 @@ public class PhraseSearch {
 
 		}
 		else {
-			System.out.println("no word");
 			return false;
 		}
 	}
 
-	public void countPhrase(){
+	public void countPhrase() {
 		// this variable is for knowing this phrase is in each index in the DataFromIndex.occurencesOfWordsCount
-		int indexOfPhraseWordInGeneralSearch = 0;
-		String[] arr = searchSentence.split(" ");
-
-		for ( String ss : arr) {
-			if(ss.equals("\"" + 	wordsToBeSearch.get(0))){
-				break;
-			}
-			indexOfPhraseWordInGeneralSearch ++;
-		}
 
 		int countOccurrence = 0;
 
 		// we will loop on the first word only of the phrase
 		// because if the first word doesn't exist, this means that there is no this phrase in the link
-		for (int i = indexOfPhraseWordInGeneralSearch; i < documentsName.size(); ++i){
+		for (int i = 0; i < wordsToBeSearch.size(); ++i) {
 			// search for occurrence
+
+
 			try {
 				countOccurrence = 0;
 				File myObj = new File(PATH + documentsName.get(i));
@@ -89,14 +88,10 @@ public class PhraseSearch {
 				while (myReader.hasNextLine()) {
 					String line = myReader.nextLine();
 
-					boolean isFound = (line.toLowerCase()).contains(searchPhrase.toLowerCase());
-					if (isFound) {
-						countOccurrence++;
-					}
-
 					countOccurrence = countPhrase(line, searchPhrase);
 				}
 				foundWords[i] = countOccurrence;
+				Data.countPhraseSearch.add(countOccurrence);
 				myReader.close();
 			} catch (FileNotFoundException e) {
 				System.out.println("An error occurred.");
@@ -104,64 +99,7 @@ public class PhraseSearch {
 			}
 		}
 
-		computeMostRelevantPhraseLinks();
 
-	}
-
-	public void computeMostRelevantPhraseLinks(){
-		int[] visited = new int[documentsName.size()];
-		int min = 0;
-		for (int j = 0; j < documentsName.size(); ++j)
-		{
-			visited[j] = 0;
-			if (foundWords[j] < foundWords[min])
-				min = j;
-		}
-		for (int j = 0; j < documentsName.size(); ++j) {
-			int maxIndex = min;
-			for (int k = 0; k < documentsName.size(); ++k) {
-				if (foundWords[k] > foundWords[maxIndex] && visited[k] == 0)
-					maxIndex = k;
-			}
-			visited[maxIndex] = 1;
-			Data.AddFromPhraseSearch(Data.urlsFromIndexer.toArray()[maxIndex].toString());
-		}
-	}
-
-	// count number of the phrase in a string
-
-	// Count occurrences of a word in string
-
-	static int countOccurences(String str, String word)
-	{
-		// split the string by spaces in a
-		String a[] = str.split(" ");
-
-		// search for pattern in a
-		int count = 0;
-		for (int i = 0; i < a.length; i++)
-		{
-			// if match found increase count
-			if (word.equals(a[i]))
-				count++;
-		}
-
-		count = 0;
-		for (int i = 0; i < str.length() - word.length(); i++){
-			boolean occure = true;
-			for (int j = i; j < word.length(); j++){
-				if (word.charAt(j) != str.charAt(j)){
-					occure = false;
-					break;
-				}
-			}
-			if (occure) {
-				count++;
-				i += word.length() - 1;
-			}
-		}
-
-		return count;
 	}
 
 	public int countPhrase(String doc, String word){

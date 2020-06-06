@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import QueryProcessor.QueryProcessor;
 import imageSearch.ImageSearch;
 import indexer.Extractor;
 import indexer.LuceneTester;
 import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -30,27 +33,20 @@ public class main {
     public static String word = "";
     public static boolean wantToFindWord = false;
     public static String location = "Egypt";
-    public static String linksToCrawl[] = {"https://stackoverflow.com/", "https://en.wikipedia.org/", "https://www.w3schools.com/", "https://www.geeksforgeeks.org/"};
+    public static String linksToCrawl[] = {"https://stackoverflow.com/", "https://en.wikipedia.org/", "https://www.geeksforgeeks.org/", "https://www.w3schools.com/"};
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
 
-
-        // Delete html file
+        int numberOFurls = 10;
+        int numberOfThreads = 4;
         String htmlPath = System.getProperty("user.dir") + "\\html";
         String imagePath = System.getProperty("user.dir") + "\\images";
+        String filenamePath = System.getProperty("user.dir");
 
         LuceneTester tester2= new LuceneTester();
-        tester2.delete(htmlPath);
+        tester2.delete(htmlPath, imagePath);
 
-        //Delete image folder
-        LuceneTester tester3= new LuceneTester();
-        tester3.delete(imagePath);
-
-        int numberOFurls = 100;
-        int numberOfThreads = 3;
-
-        String filenamePath = System.getProperty("user.dir");
-        String searchSentence ="Douglas featured collabor red important";
+        String searchSentence ="\"free encyclopedia\"";
         // remove quotes from the sentence
         StringBuilder sb = new StringBuilder(searchSentence);
         String resultString = sb.toString();
@@ -61,6 +57,12 @@ public class main {
         String search_phrase = searchSentence;
         searchSentence = resultString;
 
+        ///////////// query processor ///////////////////////
+        QueryProcessor queryProcessor = new QueryProcessor(searchSentence);
+        String newSearchSentence = queryProcessor.getNewSearchSentence();
+        ///////////// query processor ///////////////////////
+        searchSentence = newSearchSentence;
+        System.out.println("leeeeeeeeeeeength  "+ searchSentence.length());
 
         //Crawler
         Thread crawlerThreads[] = new Thread[numberOfThreads];
@@ -77,23 +79,39 @@ public class main {
 
 
         //Indexer
-        LuceneTester tester;
-        tester = new LuceneTester();
+
         try {
+            LuceneTester tester;
+            tester = new LuceneTester();
             long startTimeIndexer = System.currentTimeMillis();
             tester.createIndex();
             tester.search(searchSentence, dataa, htmlPath, dataa.urlsFromCrawler);
+            tester.delete(htmlPath, imagePath);
             long endTimeIndexer = System.currentTimeMillis();
             System.out.println("Indexer, time taken: " + (endTimeIndexer - startTimeIndexer) + " ms");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        tester.delete(htmlPath);
+
+        ////////////// Phrase Search ///////////////////
+        System.out.println("**********************");
+        PhraseSearch phraseSearch = new PhraseSearch(search_phrase, dataa.occurencesOfWordsCount, dataa.documentsName);
+        boolean phraseSearchTest = phraseSearch.checkPhraseSearch();
+        if (phraseSearchTest) {
+            phraseSearch.countPhrase();
+            System.out.println(phraseSearch.wordsToBeSearch);
+            for (int i = 0; i < phraseSearch.foundWords.length; ++i)
+                System.out.println(" index " + i + " = " + phraseSearch.foundWords[i]);
+            System.out.println("there is phrase search");
+        } else {
+            System.out.println("no phrase search");
+        }
+        ////////////// Phrase Search ///////////////////
+
         //Ranker
         Boolean wantLocationScore = false;
         Boolean wantDateScore = false;
         Ranker ranker = new Ranker(dataa, searchSentence, location, wantLocationScore, wantDateScore);
-
 
 
         System.out.println("**********************");
@@ -110,6 +128,8 @@ public class main {
         //ranker output
         System.out.println(ranker.rank(dataa, dataa.urlsFromIndexer));
         System.out.println(ranker.rankIndices(dataa, dataa.urlsFromIndexer));
+
+
 
 
         //Write Data in txt files
@@ -196,6 +216,8 @@ public class main {
         }
 
 
+
+
         //Image search
         //Ranked urls
         List<String> rankedurls=new ArrayList<String> ();
@@ -207,19 +229,6 @@ public class main {
             im.extractImage(str, searchSentence);
         }
 
-        ////////////// Phrase Search ///////////////////
-        System.out.println("**********************");
-        PhraseSearch phraseSearch = new PhraseSearch(search_phrase, dataa.occurencesOfWordsCount, dataa.documentsName);
-        boolean phraseSearchTest = phraseSearch.checkPhraseSearch();
-        if (phraseSearchTest) {
-            phraseSearch.countPhrase();
-            System.out.println(phraseSearch.wordsToBeSearch);
-            for (int i = 0; i < phraseSearch.foundWords.length; ++i)
-                System.out.println(" index " + i + " = " + phraseSearch.foundWords[i]);
-        } else {
-            System.out.println("no phrase search");
-        }
-        ////////////// Phrase Search ///////////////////
     }
 
     public static Connection connect() {

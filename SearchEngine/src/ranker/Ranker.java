@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.*;
 import Data.Data;
 public class Ranker {
-    Hashtable<String, String> countryCodes = new Hashtable<String, String>();
-    String[] searchArray;
-    Data data;
-    int numofdocs;
-    String UserLocation;
-    Boolean wantLocationScore, wantDateScore;
+    public Hashtable<String, String> countryCodes = new Hashtable<String, String>();
+    public String[] searchArray;
+    public Data data;
+    public int numofdocs;
+    public String UserLocation;
+    public Boolean wantLocationScore, wantDateScore;
 
     public Ranker(Data data, String searchString, String Location, Boolean wantLocationScore, Boolean wantDateScore) {
         numofdocs = data.documentsName.size(); // documentsName has same size and indexing as URLs list
@@ -33,6 +33,16 @@ public class Ranker {
         return result;
     }
 
+    public double tf_phrase(List<Integer> countPhraseSearch,List<String> documentsBody,int docindex)
+    {
+        if(countPhraseSearch.isEmpty() || countPhraseSearch == null)
+            return 0.0;
+        double documentsBodyCount = documentsBody.get(docindex).split(" ").length;
+        double result = 0;
+        result = countPhraseSearch.get(docindex);
+        return result;
+    }
+
     public double idf(int wordindex, List<Integer> occurencesOfWordsCount)
     // calculated for each word in all the documents
     {
@@ -44,7 +54,17 @@ public class Ranker {
         return Math.log(numofdocs / n);
         // return n;
     }
-
+    public double idf_phrase(List<Integer> countPhraseSearch)
+    {
+        if(countPhraseSearch.isEmpty() || countPhraseSearch == null)
+            return 0.0;
+        double n = 0;
+        for (int i = 0;i < countPhraseSearch.size();i++)
+        {
+            n+= countPhraseSearch.get(i);
+        }
+        return Math.log(numofdocs/n);
+    }
     public double tf_idf(int docindex, List<Integer> occurencesOfWordsCount, List<String> documentsBody)
     // calculated for each document for the entirety of all the search string
     {
@@ -54,6 +74,11 @@ public class Ranker {
 
         }
         return output;
+    }
+
+    public double tf_idf_phrase(List<Integer> countPhraseSearch,List<String> documentsBody,int docindex)
+    {
+        return tf_phrase(countPhraseSearch,documentsBody,docindex) * idf_phrase(countPhraseSearch);
     }
 
     public static void sortValue(Hashtable<String, Double> t) {
@@ -82,11 +107,10 @@ public class Ranker {
                     relevenceScore += FindsiteDate(Urls.get(i));
                 relevenceScore /= Double.valueOf(2);
             }
+            relevenceScore += 2 * tf_idf_phrase(data.countPhraseSearch,data.documentsBody,i); // higher scale for priority
             rankedList.put(Urls.get(i), relevenceScore);
-            sortValue(rankedList);
-
         }
-
+        sortValue(rankedList);
         Set<String> output = rankedList.keySet();
         return output;
     }
@@ -105,11 +129,10 @@ public class Ranker {
                     relevenceScore += FindsiteDate(Urls.get(i));
                 relevenceScore /= Double.valueOf(2);
             }
+            relevenceScore += 2 * tf_idf_phrase(data.countPhraseSearch,data.documentsBody,i); // higher scale for priority
             rankedList.put(Urls.get(i), relevenceScore);
-            sortValue(rankedList);
-
         }
-
+        sortValue(rankedList);
         Set<String> KeySet = rankedList.keySet();
         List<String> KeyList = new ArrayList<String>(KeySet);
         List<Integer> output = new ArrayList<Integer>();
