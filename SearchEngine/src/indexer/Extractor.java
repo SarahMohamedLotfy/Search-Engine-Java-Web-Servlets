@@ -63,8 +63,8 @@ public class Extractor {
                         title = doc.title();
 
                         //Remove stop words by stemmer
-                         Stemmer S = new Stemmer();
-                         title = S.stem(title);
+                        // Stemmer S = new Stemmer();
+                         //title = S.stem(title);
 
                         System.out.println("title : " + title);
                         System.out.println("");
@@ -77,23 +77,22 @@ public class Extractor {
                         }
 
                         //Remove stop words
-                        Stemmer S2 = new Stemmer();
-                        header = S2.stem(header);
+                       // Stemmer S2 = new Stemmer();
+                        //header = S2.stem(header);
                         System.out.println("header:   " + header);
 
 
                         // Plain text
                         String string = doc.body().text();
-                        String allBody = string;
 
                         //Remove stop words
-                        Stemmer S3 = new Stemmer();
-                        string = S3.stem(string);
+                       // Stemmer S3 = new Stemmer();
+                       // string = S3.stem(string);
                         String tempWord = title + " " + header + " ";
                         string = string.replaceAll(tempWord, "");
 
-                        Stemmer S4 = new Stemmer();
-                        allBody = S4.stem(allBody);
+                       // Stemmer S4 = new Stemmer();
+                       // allBody = S4.stem(allBody);
                         System.out.println("body:  " + string);
 
                         if (!title.isEmpty() || !header.isEmpty() || !string.isEmpty()) {

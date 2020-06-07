@@ -19,6 +19,7 @@ public class Data {
     public static List<String> urlsFromCrawler;
     public static List<String>urlsFromIndexer;
     public static List<String> documentsPhraseSearch;
+    public static List<Integer> countPhraseSearch;
     public static List<String> similarWords;
     public static List<String> originalWord;
 
@@ -36,6 +37,7 @@ public class Data {
         urlsFromCrawler = new ArrayList<String>();
         urlsFromIndexer = new ArrayList<String>();
         documentsPhraseSearch = new ArrayList<String>();
+        countPhraseSearch = new ArrayList<Integer>();
         similarWords = new ArrayList<String>();
         originalWord = new ArrayList<String>();
 
