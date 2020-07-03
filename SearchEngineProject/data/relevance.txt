@@ -1,0 +1,8 @@
+https://www.geeksforgeeks.org/analysis-of-algorithms-set-1-asymptotic-analysis/   0.44835075
+https://www.geeksforgeeks.org/analysis-algorithm-set-4-master-method-solving-recurrences/   0.44835075
+https://www.geeksforgeeks.org/analysis-algorithm-set-5-amortized-analysis-introduction/   23.44835075
+https://www.geeksforgeeks.org/analysis-algorithm-set-4-master-method-solving-recurrences/#content   0.44835075
+https://www.geeksforgeeks.org/analysis-algorithm-set-5-amortized-analysis-introduction/#content   8.115017416666667
+https://www.geeksforgeeks.org/analysis-of-algorithms-set-4-analysis-of-loops/   0.44835075
+https://www.geeksforgeeks.org/analysis-of-algorithms-set-1-asymptotic-analysis/#content   0.44835075
+https://www.geeksforgeeks.org/analysis-of-algorithms-set-4-analysis-of-loops/#content   0.44835075

@@ -1,0 +1,112 @@
+21
+20_.html
+amort 12
+amortization 0
+amortize 12
+amortized 12
+amortizes 0
+amortizing 0
+analysis 10
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0
+22
+21_Skip to content.html
+amort 12
+amortization 0
+amortize 12
+amortized 12
+amortizes 0
+amortizing 0
+analysis 10
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0
+19
+18_.html
+amort 0
+amortization 0
+amortize 0
+amortized 0
+amortizes 0
+amortizing 0
+analysis 0
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0
+20
+19_Skip to content.html
+amort 0
+amortization 0
+amortize 0
+amortized 0
+amortizes 0
+amortizing 0
+analysis 0
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0
+7
+6_.html
+amort 0
+amortization 0
+amortize 0
+amortized 0
+amortizes 0
+amortizing 0
+analysis 0
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0
+8
+7_Skip to content.html
+amort 0
+amortization 0
+amortize 0
+amortized 0
+amortizes 0
+amortizing 0
+analysis 0
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0
+17
+16_.html
+amort 0
+amortization 0
+amortize 0
+amortized 0
+amortizes 0
+amortizing 0
+analysis 0
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0
+18
+17_Skip to content.html
+amort 0
+amortization 0
+amortize 0
+amortized 0
+amortizes 0
+amortizing 0
+analysis 0
+introduct 0
+introduction 0
+introductions 0
+introductive 0
+introductively 0

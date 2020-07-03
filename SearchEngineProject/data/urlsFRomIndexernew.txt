@@ -1,0 +1,10 @@
+https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/
+https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/#content
+https://www.geeksforgeeks.org/category/algorithm/
+https://www.geeksforgeeks.org/category/algorithm/#content
+https://www.geeksforgeeks.org/greedy-algorithms/
+https://www.geeksforgeeks.org/greedy-algorithms/#content
+https://www.geeksforgeeks.org/mathematical-algorithms/
+https://www.geeksforgeeks.org/mathematical-algorithms/#content
+https://www.geeksforgeeks.org/fundamentals-of-algorithms/
+https://www.geeksforgeeks.org/category/algorithm/analysis/
