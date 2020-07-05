@@ -120,30 +120,11 @@ public class SearchList extends HttpServlet {
         }
 
         List<String> documentstitles = new ArrayList<String>();
-        String titlesUrl = projectUrl + "\\data\\documentsTitlesTotal.txt";
-        File file2 = new File(titlesUrl);    //creates a new file instance
-        FileReader fr2 = new FileReader(file2);   //reads the file
-        BufferedReader br2 = new BufferedReader(fr2);  //creates a buffering character input stream
-        String line2;
-        while ((line2 = br2.readLine()) != null) {
-            documentstitles.add(line2);      //appends line to string buffer
-        }
-        fr2.close();    //closes the stream and release the resources
-        documentstitles.removeAll(Arrays.asList("", null));
-
-
         List<String> plainTexts = new ArrayList<String>();
+        List<String> documentstitlestemp = new ArrayList<String>();
+        List<String> plainTextstemp = new ArrayList<String>();
         List<String> urlsFromIndxer = new ArrayList<String>();
-        String plaintextsUrl = projectUrl + "\\data\\plaintextsTotal.txt";
-        File file3 = new File(plaintextsUrl);    //creates a new file instance
-        FileReader fr3 = new FileReader(file3);   //reads the file
-        BufferedReader br3 = new BufferedReader(fr3);  //creates a buffering character input stream
-        String line3;
-        while ((line3 = br3.readLine()) != null) {
-            plainTexts.add(line3);      //appends line to string buffer
-        }
-        fr3.close();    //closes the stream and release the resources
-        plainTexts.removeAll(Arrays.asList("", null));
+
 
         String imagePath="D:\\downloads\\apache-tomcat-9.0.36\\webapps\\ROOT\\Images";
         try {
@@ -161,6 +142,37 @@ public class SearchList extends HttpServlet {
         for (int i : IndicesIndexer) {
             urlsFromIndxer.add(urlsFromCrawler.get(i));
         }
+
+        File dir = new File("C:\\Users\\hi\\IdeaProjects\\18_Sarah_Mohamed_Ahmed_Lotfy\\SearchEngineProject\\html");
+        File[] directoryListing = dir.listFiles();
+
+        for (int g:IndicesIndexer)
+        {
+                    for (File child : directoryListing) {
+                        String str = child.getName().replaceAll("\\D+","");;
+                        if (str.equals(Integer.toString(g))) {
+                            System.out.println(str);
+                            System.out.println(child.getName());
+
+                            String multihtml = new String(Files.readAllBytes(Paths.get(child.getPath())));
+                            String[] htmlParts = multihtml.split("(?<=</html>)");
+                            org.jsoup.nodes.Document doc;
+                            for (String part : htmlParts) {
+                                doc = Jsoup.parse(part);
+                                //Title
+                                String title = "";
+                                title = doc.title();
+                                plainTexts.add(doc.body().text().replaceAll(title, ""));
+                                documentstitles.add(title);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+        plainTexts.removeAll(Arrays.asList("", null));
+        documentstitles.removeAll(Arrays.asList("", null));
+
 
 
             ////////////// Phrase Search ///////////////////
@@ -191,50 +203,46 @@ public class SearchList extends HttpServlet {
         List<String> plainTextReturnde = new ArrayList<String>();
         List<String> urlsReturned = new ArrayList<String>();
         List<Integer> rankedIndices = new ArrayList<Integer>();
-        try {
-            for (int i : ranker.rankIndices(dataa, urlsFromIndxer)) {
-                urls.add(urlsFromIndxer.get(i));
-            }
-            urls.removeAll(Arrays.asList("", null));
-            for (String j : urls) {
-                for (int i = 0; i < urlsFromCrawler.size(); i++) {
-                    if (urlsFromCrawler.get(i).equals(j)) {
-                        rankedIndices.add(i);
-                        break;
-                    }
+        List<Integer> rankedIndicesFinal = new ArrayList<Integer>();
+        rankedIndicesFinal=ranker.rankIndices(dataa, urlsFromIndxer);
+        for (int i : rankedIndicesFinal) {
+            urls.add(urlsFromIndxer.get(i));
+        }
+        urls.removeAll(Arrays.asList("", null));
+        for (String j : urls) {
+            for (int i = 0; i < urlsFromCrawler.size(); i++) {
+                if (urlsFromCrawler.get(i).equals(j)) {
+                    rankedIndices.add(i);
+                    break;
                 }
             }
-            rankedIndices.removeAll(Arrays.asList("", null));
+        }
+        rankedIndices.removeAll(Arrays.asList("", null));
 
 
 
-
-            String[] searchedWords = searchSentence.split(" ");
-            for (int i : rankedIndices) {
-                int indexFound = -1;
-                for (String searchWord : searchedWords) {
-                    indexFound = plainTexts.get(i).indexOf(searchWord);
-                    if (indexFound > -1) {
-                        break;
-                    }
-                }
-                if (indexFound == -1)
-                    indexFound = 0;
-
-                if (plainTexts.get(i).length() - indexFound < 400) {
-                    plainTextReturnde.add(plainTexts.get(i).substring(indexFound, plainTexts.get(i).length()) + "....");
-                } else {
-                    plainTextReturnde.add(plainTexts.get(i).substring(indexFound, indexFound + 400) + "....");
+        String[] searchedWords = searchSentence.split(" ");
+        for (int i : rankedIndicesFinal) {
+            int indexFound = -1;
+            for (String searchWord : searchedWords) {
+                indexFound = plainTexts.get(i).indexOf(searchWord);
+                if (indexFound > -1) {
+                    break;
                 }
             }
+            if (indexFound == -1)
+                indexFound = 0;
 
-
-            for (int i : rankedIndices) {
-                documentstitlesReturned.add(documentstitles.get(i));
+            if (plainTexts.get(i).length() - indexFound < 400) {
+                plainTextReturnde.add(plainTexts.get(i).substring(indexFound, plainTexts.get(i).length()) + "....");
+            } else {
+                plainTextReturnde.add(plainTexts.get(i).substring(indexFound, indexFound + 400) + "....");
             }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        }
+
+
+        for (int i : rankedIndicesFinal) {
+            documentstitlesReturned.add(documentstitles.get(i));
         }
 
 
@@ -587,7 +595,7 @@ public class SearchList extends HttpServlet {
 
                     // you probably want something more involved here
                     // to display in your UI
-                    page += "<img src=\"" + "images" + "\\" + f.getName() + "\" style=\"height: 200px; padding: 5px;\" class=\"shadowss\">";
+                    page += "<img src=\"D:\\downloads\\apache-tomcat-9.0.36\\webapps\\ROOT\\tomcat.png\" style=\"height: 200px; padding: 5px;\" class=\"shadowss\">";
                 } catch (final IOException e) {
                     // handle errors here
                 }

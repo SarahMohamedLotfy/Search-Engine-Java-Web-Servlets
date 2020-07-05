@@ -133,16 +133,10 @@ public class LuceneTester {
                             int titleCount = 0;
                             int headerCount = 0;
                             int plainTextCount = 0;
-                            for (int n = 0; n < positions.size(); n++) {
-                                if (positions.get(n) < commaPositions.get(0)) {
-                                    titleCount++;
-                                } else if (positions.get(n) < commaPositions.get(1)) {
-                                    headerCount++;
-                                } else
-                                    plainTextCount++;
-                            }
+
                             //image search
                             String allBody = " ";
+                            String title="";
                             String multihtml = new String(Files.readAllBytes(Paths.get(child.getPath())));
                             String[] htmlParts = multihtml.split("(?<=</html>)");
                             org.jsoup.nodes.Document htmllDoc;
@@ -157,7 +151,7 @@ public class LuceneTester {
                                 }
 
                                 //Title
-                                String title = htmllDoc.title();
+                                 title = htmllDoc.title();
                                 Element body = htmllDoc.body();
                                 //header
                                 Elements headers = body.getElementsByTag("header");
@@ -167,15 +161,22 @@ public class LuceneTester {
                                 }
                                 allBody = htmllDoc.body().text();
                             }
+                            int fromIndex2 = 0;
+                            while ((title.indexOf(word, fromIndex2)) != -1) {
+                                System.out.println("Found at index: " + fromIndex2);
+                                titleCount++;
+                                fromIndex2++;
+                            }
+                            occurencesOfWordsInTitle.add(titleCount);
 
                             int fromIndex = 0;
-                            while ((fromIndex = allBody.indexOf(word, fromIndex)) != -1) {
+                            while ((allBody.indexOf(word, fromIndex)) != -1) {
                                 System.out.println("Found at index: " + fromIndex);
                                 countWord++;
                                 fromIndex++;
                             }
                             occurencesOfWordsCount.add(countWord);
-                            myWriter3.write(word + " " + countWord + System.lineSeparator());
+                            myWriter3.write(word + " " + titleCount + System.lineSeparator());
                         }
                         break;
                     }

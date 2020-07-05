@@ -33,11 +33,11 @@ public class main {
     public static String word = "";
     public static boolean wantToFindWord = false;
     public static String location = "Egypt";
-    public static String linksToCrawl[] = {"https://stackoverflow.com/", "https://en.wikipedia.org/", "https://www.geeksforgeeks.org/", "https://www.w3schools.com/","https://en.wikipedia.org/wiki/FIFA","https://en.wikipedia.org/wiki/FIFA_World_Cup"};
+    public static String linksToCrawl[] = {"https://stackoverflow.com/", "https://en.wikipedia.org/", "https://www.geeksforgeeks.org/", "https://www.w3schools.com/","https://en.wikipedia.org/wiki/FIFA","https://en.wikipedia.org/wiki/FIFA_World_Cup","https://www.bbc.co.uk/"};
 
     public static void main(String[] args) throws IOException, SQLException, InterruptedException {
 
-        int numberOFurls = 60;
+        int numberOFurls = 10;
         int numberOfThreads = 4;
         String htmlPath = System.getProperty("user.dir") + "\\html";
 
@@ -45,31 +45,42 @@ public class main {
          //tester2.delete(htmlPath, imagePath);
 
         //Crawler
-       /* Thread crawlerThreads[] = new Thread[numberOfThreads];
+        /*Thread crawlerThreads[] = new Thread[numberOfThreads];
         for (int i = 0; i < numberOfThreads; ++i) {
             crawlerThreads[i] = new Thread(new WebCrawler(linksToCrawl[2], numberOFurls, wantToFindWord,word));
             crawlerThreads[i] = new Thread(new WebCrawler(linksToCrawl[2], numberOFurls, wantToFindWord,word));
             crawlerThreads[i].start();
         }*/
+        //Crawler
+       /* Thread crawlerThreads[] = new Thread[numberOfThreads];
+        for (int i = 0; i < numberOfThreads; ++i) {
+            String trying = "https://www.instagram.com/sophiet/?hl=en";
+            crawlerThreads[i] = new Thread(new WebCrawler(linksToCrawl[i], numberOFurls, wantToFindWord,word));
+//            crawlerThreads[i] = new Thread(new WebCrawler(linksToCrawl[0], numberOFurls, wantToFindWord,word));
+            crawlerThreads[i].start();
+        }*/
 
         //Extractor ///
-        /*Extractor extract = new Extractor();
-        extract.extractFromHtml(htmlPath, numberOFurls);
+      //  Extractor extract = new Extractor();
+       // extract.extractFromHtml(htmlPath, numberOFurls);
 
-        String urll= "C:\\Users\\hi\\IdeaProjects\\18_Sarah_Mohamed_Ahmed_Lotfy\\SearchEngineProject\\urldfromCrawler.txt";
+       /* String urll= "C:\\Users\\hi\\IdeaProjects\\18_Sarah_Mohamed_Ahmed_Lotfy\\SearchEngineProject\\urldfromCrawler.txt";
         FileWriter myWriter = new FileWriter(urll);
         for(String i:WebCrawler.returUrl()) {
             myWriter.write(i + System.lineSeparator());
         }
         myWriter.close();*/
 
-        long startTimeIndexer = System.currentTimeMillis();
+      long startTimeIndexer = System.currentTimeMillis();
         LuceneTester tester;
         tester = new LuceneTester();
         tester.createIndex();
         long endTimeIndexer = System.currentTimeMillis();
         System.out.println("Indexer, time taken: " + (endTimeIndexer - startTimeIndexer) + " ms");
+
+
     }
+
 }
 
 

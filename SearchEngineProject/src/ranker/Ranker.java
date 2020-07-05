@@ -33,6 +33,7 @@ public class Ranker {
         //{
         result = occurencesOfWordsCount.get((searchArray.length)*docindex + wordindex) / documentsBodyCount;
         //}
+        result+= data.occurencesOfWordsInTitle.get((searchArray.length)*docindex + wordindex);
         return result;
     }
 
@@ -85,9 +86,10 @@ public class Ranker {
         return tf_phrase(countPhraseSearch,documentsBody,docindex) * idf_phrase(countPhraseSearch);
     }
     public List<Integer> rankIndices(Data data, List<String> Urls) throws IOException {
+        ArrayList<Double> relevnceScoresList = new ArrayList<Double>();
+
         Hashtable<String, Double> rankedList = new Hashtable<String, Double>();
         String plaintextPath = "C:\\Users\\hi\\IdeaProjects\\18_Sarah_Mohamed_Ahmed_Lotfy\\SearchEngineProject\\data\\relevance.txt";
-
         FileWriter myWriter3 = new FileWriter(plaintextPath);
         for (int i = 0; i < numofdocs; i++) {
             Double relevenceScore = tf_idf(i, data.occurencesOfWordsCount, data.documentsName);
@@ -102,30 +104,38 @@ public class Ranker {
                     relevenceScore += FindsiteDate(Urls.get(i));
                 relevenceScore /= Double.valueOf(2);
             }
-          //  relevenceScore += 2 * tf_idf_phrase(data.countPhraseSearch,data.documentsName,i); // higher scale for priority
+            //myWriter3.write(Urls.get(i)+ System.lineSeparator() );
+            //  relevenceScore += 2 * tf_idf_phrase(data.countPhraseSearch,data.documentsName,i); // higher scale for priority
+            relevnceScoresList.add(relevenceScore);
             rankedList.put(Urls.get(i), relevenceScore);
         }
         ArrayList<Double> relevnceScores = new ArrayList<Double>();
         ArrayList<Double> relevnceScorestemp = new ArrayList<Double>();
         List<Integer> indices = new ArrayList<Integer>();
+        List<Integer> finalindices = new ArrayList<Integer>();
+        List<String> urlsFinal = new ArrayList<String>();
 
-        for (String h: rankedList.keySet())
+        for (Double  i: relevnceScoresList)
         {
-            myWriter3.write(h+ "   "+ rankedList.get(h)+ System.lineSeparator() );
-            relevnceScores.add( rankedList.get(h));
+            myWriter3.write(i+ System.lineSeparator() );
+            relevnceScorestemp.add(i);
         }
         myWriter3.close();
-        relevnceScorestemp = relevnceScores;
-        Collections.sort(relevnceScores);
-        for (double d : relevnceScorestemp)
-            for (int y =0;y<relevnceScores.size();y++)
+        System.out.println(relevnceScorestemp);
+        Collections.sort(relevnceScoresList);
+        Collections.reverse(relevnceScoresList);
+        System.out.println(relevnceScoresList);
+
+        for (double d : relevnceScoresList)
+            for (int y =0;y<relevnceScorestemp.size();y++)
             {
-                if (d == relevnceScores.get(y) && ! indices.contains(y)) {
+                if (d == relevnceScorestemp.get(y) && ! indices.contains(y)) {
+                    System.out.println(d);
+                    System.out.println(y);
                     indices.add(y);
                     break;
                 }
             }
-
         return indices;
     }
 
